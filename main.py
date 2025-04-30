@@ -83,6 +83,9 @@ while run:
     else:
         sound.play_music("game")
         if current_time - last_spawn_time > flake_spawn_interval and len(snow_flakes) < player.snow_fall_threshold:
+            for snow_flake in snow_flakes:
+                if snow_flake.size > 20:
+                    flake_spawn_interval = 10000
             snow_flakes.append(Snow(screen))
             last_flake_spawn_time = current_time
             flake_spawn_interval = random.randint(random.randint(0,2000),random.randint(2000,4000))
@@ -102,11 +105,12 @@ while run:
 
         for snow_flake in snow_flakes:
             
-            snow_flake.update()
+            snow_flake.update(player.current_level)
             snow_flake.draw()
             if collide(player,snow_flake):
                 player.width += snow_flake.rect.width
                 player.height += snow_flake.rect.width
+                player.score += snow_flake.rect.width * 10
                 snow_flake.reset()
         if player.check_level_up():
             snow_flakes = []

@@ -42,6 +42,10 @@ class PlayerUI:
         size_level_up_surface = self.font.render(size_level_up_text,True,(255,255,255))
         self.surface.blit(size_level_up_surface,(10,130))
 
+        score_text = f"Score: {self.player.score}"
+        score_surface = self.font.render(score_text,True,(255,255,255))
+        self.surface.blit(score_surface,(1000,10))
+
         self.screen.blit(self.surface, self.rect)
 
     def draw_size_bar(self):
@@ -50,10 +54,10 @@ class PlayerUI:
         progress = min(size_avg / self.player.level_up_size, 1.0)
         fill_height = bar_height * progress
 
-        outline_rect = pygame.Rect(10, 160, bar_width, bar_height)
+        outline_rect = pygame.Rect(10, 190, bar_width, bar_height)
         fill_rect = pygame.Rect(
             10,
-            160 + (bar_height - fill_height),
+            190 + (bar_height - fill_height),
             bar_width,
             fill_height
         )

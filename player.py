@@ -90,6 +90,7 @@ class Player:
 
         if self.current_level > len(self.levels) - 1:
             self.hasWon = True
+        self.size = self.width
 
     def handle_input(self):
         keys = pygame.key.get_pressed()
@@ -113,6 +114,7 @@ class Player:
         self.snow_fall_threshold = self.snow_fall_thresholds[0]
         self.current_level = 1
         self.hasWon = False
+        self.score = 0
 
 
     def check_level_up(self):
