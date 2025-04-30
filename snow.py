@@ -4,7 +4,8 @@ import random
 class Snow:
     def __init__(self, screen):
         self.screen = screen
-        self.surface = pygame.Surface((3, 3))  # create a 3x3 surface
+        self.size = random.randint(1,9)
+        self.surface = pygame.Surface((self.size,self.size))  # create a 3x3 surface
         self.surface.fill((255, 255, 255))     # fill it white (very important!)
         self.reset()
 

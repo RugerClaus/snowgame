@@ -88,6 +88,9 @@ class Player:
         self.width = max(1, self.width - shrink_rate)
         self.height = max(1, self.height - shrink_rate)
 
+        if self.current_level > len(self.levels) - 1:
+            self.hasWon = True
+
     def handle_input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]:  # Move left and rotate left
@@ -109,6 +112,7 @@ class Player:
         self.level_up_size = self.levels[0]
         self.snow_fall_threshold = self.snow_fall_thresholds[0]
         self.current_level = 1
+        self.hasWon = False
 
 
     def check_level_up(self):

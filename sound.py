@@ -5,6 +5,7 @@ class SoundManager:
         pygame.mixer.init()
         self.music_tracks = {
             "game": "sounds/music.wav",
+            "win": "sounds/win.mp3"
         }
         self.sound_effects = {
 

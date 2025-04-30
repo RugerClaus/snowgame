@@ -2,6 +2,7 @@ from player import Player
 from snow import Snow
 from rocks import Rock
 from ui import PlayerUI
+from win import WinMenu
 from sound import SoundManager
 from collision import *
 from gameover import GameOverMenu
@@ -32,22 +33,20 @@ ui = PlayerUI(screen,player,start_time)
 
 sound = SoundManager()
 
+win_music_played = False
+
 def restart():
-    global snow_flakes, rocks, start_time, ui
+    global snow_flakes, rocks, start_time, ui, win_music_played
+    sound.stop_music()
     player.reset()
     snow_flakes = []
     rocks = []
     start_time = pygame.time.get_ticks()
     ui = PlayerUI(screen,player,start_time)
-    sound.play_music("game")
+    win_music_played = False
     
-    
-
-
 game_over = GameOverMenu(screen,restart,pygame.quit)
-
-def draw_score(player_score):
-    pass
+win = WinMenu(screen,restart,pygame.quit)
 
 def handle_events():
     global run
@@ -68,6 +67,16 @@ while run:
         sound.stop_music()
         game_over.draw()
         
+        pygame.display.flip()
+        clock.tick(60)
+        continue
+    elif player.hasWon:
+        if not win_music_played:
+            sound.stop_music()
+            sound.play_music("win", loop=False)
+            win_music_played = True
+
+        win.draw()
         pygame.display.flip()
         clock.tick(60)
         continue
@@ -96,8 +105,8 @@ while run:
             snow_flake.update()
             snow_flake.draw()
             if collide(player,snow_flake):
-                player.width += 5
-                player.height += 5
+                player.width += snow_flake.rect.width
+                player.height += snow_flake.rect.width
                 snow_flake.reset()
         if player.check_level_up():
             snow_flakes = []
@@ -111,14 +120,6 @@ while run:
                 rock.reset()
         
         ui.draw()
-
-
-    
-
-
-    
-
-
 
     clock.tick(60)
 
