@@ -23,11 +23,11 @@ class Rock:
             (108, 122, 137),  # Cool-toned shale
             (135, 115, 90),   # Desert rock
         ]
-        self.surface.fill(random.choice(colors))     # fill it white (very important!)
+        self.surface.fill((255,0,0))     # fill it white (very important!)
         self.reset()
 
     def reset(self):
-        self.x = random.randint(0, 800)
+        self.x = random.randint(0, self.screen.get_width())
         self.y = random.randint(-600, 0)
         self.speed = 5
         self.rect = self.surface.get_rect(topleft=(self.x, self.y))

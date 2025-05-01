@@ -1,5 +1,5 @@
 import pygame
-import math
+
 
 class PlayerUI:
     def __init__(self, screen, player, start_time, level_up_size=100):
@@ -44,7 +44,7 @@ class PlayerUI:
 
         score_text = f"Score: {self.player.score}"
         score_surface = self.font.render(score_text,True,(255,255,255))
-        self.surface.blit(score_surface,(1000,10))
+        self.surface.blit(score_surface,(self.screen.get_width() - 200,10))
 
         self.screen.blit(self.surface, self.rect)
 

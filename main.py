@@ -1,11 +1,12 @@
 from player import Player
 from snow import Snow
 from rocks import Rock
-from ui import PlayerUI
-from win import WinMenu
+from ui.ui import PlayerUI
+from ui.win import WinMenu
+from powerup import Powerup
 from sound import SoundManager
 from collision import *
-from gameover import GameOverMenu
+from ui.gameover import GameOverMenu
 import pygame
 import random
 
@@ -13,7 +14,7 @@ pygame.init()
 
 (width,height) = (1200,800)
 
-screen = pygame.display.set_mode((width,height))
+screen = pygame.display.set_mode((width,height),pygame.RESIZABLE)
 clock = pygame.time.Clock()
 
 run = True
@@ -21,6 +22,7 @@ player = Player(screen)
 
 snow_flakes = []
 rocks = []
+power_ups = []
 start_time = pygame.time.get_ticks()
 
 last_spawn_time = pygame.time.get_ticks()
@@ -29,6 +31,10 @@ flake_spawn_interval = random.randint(0,2000)
 
 last_rock_spawn_time = pygame.time.get_ticks()
 rock_spawn_interval = random.randint(1000,4000)
+
+last_power_up_spawn_time = pygame.time.get_ticks()
+power_up_spawn_interval = random.randint(0,4000)
+
 ui = PlayerUI(screen,player,start_time)
 
 sound = SoundManager()
@@ -55,7 +61,18 @@ def handle_events():
             pygame.quit()
             run = False
             break
+
+        elif event.type == pygame.VIDEORESIZE:
+            width, height = event.size
+            screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
+            # Optionally update components with new screen
+            ui.screen = screen
+            player.screen = screen
+            game_over.screen = screen
+            win.screen = screen
+            win.update()
         game_over.handle_event(event)
+        win.handle_event(event)
 
 while run:
 
@@ -65,6 +82,7 @@ while run:
 
     if not player.alive:
         sound.stop_music()
+        game_over.update()
         game_over.draw()
         
         pygame.display.flip()
@@ -83,16 +101,17 @@ while run:
     else:
         sound.play_music("game")
         if current_time - last_spawn_time > flake_spawn_interval and len(snow_flakes) < player.snow_fall_threshold:
-            for snow_flake in snow_flakes:
-                if snow_flake.size > 20:
-                    flake_spawn_interval = 10000
             snow_flakes.append(Snow(screen))
             last_flake_spawn_time = current_time
             flake_spawn_interval = random.randint(random.randint(0,2000),random.randint(2000,4000))
-        if current_time - last_rock_spawn_time > rock_spawn_interval and len(rocks) < 20:
+        elif current_time - last_rock_spawn_time > rock_spawn_interval and len(rocks) < 30:
             rocks.append(Rock(screen))
             last_rock_spawn_time = current_time
             rock_spawn_interval = random.randint(random.randint(1000,2000),random.randint(2000,6000))
+        elif current_time - last_power_up_spawn_time > power_up_spawn_interval and len(power_ups) < 15:
+            power_ups.append(Powerup(screen))
+            last_power_up_spawn_time = current_time
+            power_up_spawn_interval = random.randint(random.randint(1000,2000),random.randint(2000,6000))
 
         screen.fill((0,0,0))
 
@@ -115,6 +134,7 @@ while run:
         if player.check_level_up():
             snow_flakes = []
             rocks = []
+            power_ups = []
 
         for rock in rocks:
             rock.update()
@@ -122,6 +142,16 @@ while run:
             if collide(player,rock):
                 player.alive = False
                 rock.reset()
+        
+        for power_up in power_ups:
+            power_up.update()
+            power_up.draw()
+            if collide(player,power_up):
+                
+                player.powerup = True
+                player.powerup_start_time = pygame.time.get_ticks()
+                power_up.reset()
+                
         
         ui.draw()
 

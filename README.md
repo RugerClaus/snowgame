@@ -2,6 +2,9 @@ Licenses for third party assets:
 Winning sound effect in "sounds/win.mp3
 https://pixabay.com/sound-effects/049269-funny-fanfare-2wav-65260/
 
+_________________
+
+
 Licenses for original assets:
 Gameplay music in "sounds/music.wav"
 Winter Waves - Roger Falck
@@ -22,5 +25,6 @@ Press and hold D to move right.
 
 The object of the game is to capture snowflakes and push the grow meter to the max to level up.
 You need to avoid the falling rocks as collision with a rock forces a game over.
+The powerups are green and stop the player "melting" for 5 seconds
 Beating level 20 wins the game.
-The player is constantly *melting* and the rate increases depending on size. I may change this mechanic
+The player is constantly *melting* and the rate increases depending on size

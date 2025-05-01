@@ -5,7 +5,7 @@ class Snow:
     def __init__(self, screen):
         self.screen = screen
         self.current_level = 1
-        self.size = random.randint(1,self.current_level * 9)
+        self.size = random.randint(1,self.current_level * self.current_level + 1)
         self.surface = pygame.Surface((self.size,self.size))  # create a 3x3 surface
         self.surface.fill((255, 255, 255))     # fill it white (very important!)
         self.reset()

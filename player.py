@@ -48,6 +48,8 @@ class Player:
         ]
         self.reset()
         self.size = self.width
+        self.powerup_duration = 5000
+        self.powerup_start_time = 0
         
     def draw(self):
         
@@ -68,29 +70,33 @@ class Player:
         self.rect.centerx = old_centerx
         self.rect.bottom = old_bottom
 
-        if self.width > 200 and self.height > 200:
-            shrink_rate = 50
-        elif self.width > 150 and self.height > 150:
-            shrink_rate = 10
-        elif self.width > 100 and self.height > 100:
-            shrink_rate = 5
-        elif self.width > 50 and self.height > 50:
-            shrink_rate = 1
-        elif self.width > 40 and self.height > 40:
-            shrink_rate = 0.5
-        elif self.width > 10 and self.height > 10:
-            shrink_rate = 0.1
+        if self.width > 50 and not self.powerup:
+            self.shrink_rate = 1
+        elif self.width > 40 and not self.powerup:
+            self.shrink_rate = 0.5
+        elif self.width > 10 and not self.powerup:
+            self.shrink_rate = 0.1
+        elif self.powerup:
+            current_time = pygame.time.get_ticks()
+            self.shrink_rate = 0
+            self.surface.fill((0,255,22))
+            if current_time - self.powerup_start_time >= self.powerup_duration:
+                self.powerup = False
         else:
-            shrink_rate = 0.01
+            self.shrink_rate = 0.01
 
-        if self.width <= 1 and self.height <= 1:
+        if self.width <= 1:
             self.alive = False 
-        self.width = max(1, self.width - shrink_rate)
-        self.height = max(1, self.height - shrink_rate)
+        self.width = max(1, self.width - self.shrink_rate)
+        self.height = max(1, self.height - self.shrink_rate)
 
         if self.current_level > len(self.levels) - 1:
             self.hasWon = True
+
         self.size = self.width
+        self.rect.bottom = self.screen.get_height() - 100
+
+
 
     def handle_input(self):
         keys = pygame.key.get_pressed()
@@ -115,6 +121,7 @@ class Player:
         self.current_level = 1
         self.hasWon = False
         self.score = 0
+        self.powerup = False
 
 
     def check_level_up(self):
@@ -127,8 +134,10 @@ class Player:
             if self.current_level <= self.levels[self.current_level - 1] and self.current_level <= self.snow_fall_thresholds[self.current_level -1]:
                 self.width = 10
                 self.height = 10
+                self.powerup = False
                 self.level_up_size = self.levels[self.current_level - 1]
                 self.snow_fall_threshold = self.snow_fall_thresholds[self.current_level - 1]
             print(self.current_level)                
             return True
         return False
+    
