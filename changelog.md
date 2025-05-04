@@ -33,3 +33,9 @@ The snow fall itself is much less thick.
 
 Increased snowfall thresholds in player.py's constructor method by a factor of 10. This seems to have resolved the strange issue.
 ---------------------------------
+05/04 09:46
+Quick extra commit
+
+Added notes.txt file
+Put font.py with the rest of the UI to keep it neat and packaged
+-----------------------------------------------------------------

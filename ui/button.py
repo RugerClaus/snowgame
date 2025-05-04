@@ -1,5 +1,5 @@
 import pygame
-from font import FontEngine
+from ui.font import FontEngine
 
 class Button:
     def __init__(self, text, x, y, width, height, text_unhovered_color, text_hovered_color, action=None):

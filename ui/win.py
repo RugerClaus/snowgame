@@ -1,6 +1,6 @@
 import pygame
 from ui.button import Button
-from font import FontEngine
+from ui.font import FontEngine
 
 class WinMenu:
     def __init__(self, screen, restart_callback, quit_callback):

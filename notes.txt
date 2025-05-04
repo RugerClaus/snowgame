@@ -1,0 +1,20 @@
+Need to modify falling logic for objects (power ups, damaging entities)
+This is handled in the main loop of the App itself.
+I want to increase the spawn rate and speed and perhaps other attributes depending on what kind of other entities I add to the game.
+I want to focus on this area for now, but at some point, I'd like to overhaul the entity logic even further and consolidate it to keep my code clean.
+There is value in verbose code however and this is not affecting performance. I do think the entities are getting a bit hard to manage however.
+Perhaps I make an entities class to manage the entities instead of having an entity base class.
+Using inheritance a lot has left a bad taste in my mouth after playing with Java, but it's not super unmanageable here. 
+
+I need to clean this directory up. I've encapsulated the UI into one section. That UI is basically my UI library at that point. I want to actually work on it separately,
+and have it be fully functional and extensible. Essentially to be a module that can be used in any pygame setting. At this point, I think I'm really close to having that.
+The UI module at this point now has all its components using the size of the window for positioning. I've been moving it across from project to project,
+and the button class, and FontEngine are really reusable slices of code.
+
+The UI module will be it's own library at this point, I'd like to actually move that section to its own project and try to encapsulate some of the more repetitive logic.
+Make it more extensible and configurable by the user. Allow inputs for certain configurations like if the developer wants to use a health bar or not, and perhaps making 
+UI components like that fully customizeable. I may want to redo the FontEngine so that it handles file paths itself as well as has a method to create a font.
+Perhaps have the fonts as individual objects to give the developer a way to customize all the fonts. 
+
+I may just make a font package with preset fonts however. This seems like a more clear direction to make it easier for the game developer to spend less time dealing with thinking
+about fonts and more about creating their game using easily customizeable UI components.
