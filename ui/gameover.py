@@ -3,10 +3,11 @@ from ui.button import Button
 from ui.font import FontEngine
 
 class GameOverMenu:
-    def __init__(self,screen, restart_callback, quit_callback):
+    def __init__(self,screen, restart_callback, main_menu_callback, quit_callback):
         self.screen = screen
         self.buttons = []
         self.restart_callback = restart_callback
+        self.main_menu_callback = main_menu_callback
         self.quit_callback = quit_callback
         self.font = FontEngine("GameOver").font
 
@@ -15,6 +16,7 @@ class GameOverMenu:
     def create_buttons(self):
         self.buttons = [
             Button("Restart", self.screen.get_width() / 4, self.screen.get_height() // 2, 175, 40, (200, 50, 50), (255, 255, 255), self.restart_callback),
+            Button("Main Menu",self.screen.get_width() / 2, self.screen.get_height() // 2+100, 175, 40, (200,50,50),(255,255,255),self.main_menu_callback),
             Button("Exit", self.screen.get_width() / 2 + self.screen.get_width() / 4, self.screen.get_height() // 2, 175, 40, (200, 50, 50), (255, 255, 255), self.quit_callback),
         ]
 
@@ -36,7 +38,4 @@ class GameOverMenu:
             pygame.quit()
 
     def update(self):
-        self.buttons = [
-            Button("Restart", self.screen.get_width() / 4, self.screen.get_height() // 2, 175, 40, (200, 50, 50), (255, 255, 255), self.restart_callback),
-            Button("Exit", self.screen.get_width() / 2 + self.screen.get_width() / 4, self.screen.get_height() // 2, 175, 40, (200, 50, 50), (255, 255, 255), self.quit_callback),
-        ]
+        self.create_buttons()

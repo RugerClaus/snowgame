@@ -14,7 +14,7 @@ class PlayerUI:
         self.surface.fill((0, 0, 0, 0))  # transparent clear
 
         # Draw size progress bar
-        self.draw_size_bar()
+        self.draw_size_bar("bottom")
 
         # Draw timer
         elapsed_ms = pygame.time.get_ticks() - self.start_time
@@ -48,27 +48,63 @@ class PlayerUI:
 
         self.screen.blit(self.surface, self.rect)
 
-    def draw_size_bar(self):
-        bar_width, bar_height = 25, 150
-        size_avg = (self.player.width + self.player.height) / 2
-        progress = min(size_avg / self.player.level_up_size, 1.0)
-        fill_height = bar_height * progress
+    # added location variable to the size bar drawing method
+    # this is so that eventually the player can actually change the position of it. I'm thinking this will be more general for the UI library
+    # this file is getting really really extensible.
+    # this will currently allow me to either choose when the function is called in the draw method, or implement a player's interaction
+    # I need to make a pause menu first :)
 
-        outline_rect = pygame.Rect(10, 190, bar_width, bar_height)
-        fill_rect = pygame.Rect(
-            10,
-            190 + (bar_height - fill_height),
-            bar_width,
-            fill_height
-        )
+    def draw_size_bar(self,location):
 
-        fill_color = (
-            int(255 * (1 - progress)),  # red to green
-            int(255 * progress),
-            0
-        )
+        if location == "bottom":
+            bar_width, bar_height = self.screen.get_width() // 2, 20
+            size_avg = (self.player.width + self.player.height) / 2
+            progress = min(size_avg / self.player.level_up_size, 1.0)
+            fill_width = bar_width * progress
+
+            outline_rect = pygame.Rect(self.screen.get_width() // 4, self.screen.get_height() - 50, bar_width, bar_height)
+            fill_rect = pygame.Rect(
+                outline_rect.left + 2,       # small padding from the left
+                outline_rect.top + 2,        # small padding from the top
+                fill_width - 4,              # adjust for left/right padding
+                bar_height - 4               # adjust for top/bottom padding
+            )
+
+            fill_color = (
+                int(255 * (1 - progress)),
+                int(255 * progress),
+                0
+            )
+        elif location == "left":
+            bar_width = 20
+            bar_height = self.screen.get_height() // 2
+            size_avg = (self.player.width + self.player.height) / 2
+            progress = min(size_avg / self.player.level_up_size, 1.0)
+            fill_height = bar_height * progress
+
+            # Vertical bar aligned at x = 50 and near bottom of the screen
+            outline_rect = pygame.Rect(50, self.screen.get_height() - bar_height - 50, bar_width, bar_height)
+            
+            # Filled portion grows from bottom up
+            fill_rect = pygame.Rect(
+                outline_rect.left + 2,
+                outline_rect.bottom - fill_height + 2,  # start from bottom, add padding
+                bar_width - 4,
+                fill_height - 4 if fill_height >= 4 else 0  # prevent negative height
+            )
+
+            fill_color = (
+                int(255 * (1 - progress)),  # red to green
+                int(255 * progress),
+                0
+            )
+
 
         pygame.draw.rect(self.surface, fill_color, fill_rect)
         pygame.draw.rect(self.surface, (255, 255, 255), outline_rect, 2)
 
-
+    def update(self):
+        current_width, current_height = self.screen.get_size()
+        if (self.surface.get_width(), self.surface.get_height()) != (current_width, current_height):
+            self.surface = pygame.surface.Surface((current_width, current_height), pygame.SRCALPHA)
+            self.rect = self.surface.get_rect()

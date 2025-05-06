@@ -33,6 +33,6 @@ class Button:
     def is_clicked(self, mouse_pos, mouse_click):
         # Debugging: print to check if button is clicked
         if self.rect.collidepoint(mouse_pos) and mouse_click:
-            print(f"Button {self.text} clicked!")  # Debugging
+            # print(f"Button {self.text} clicked!")  # Debugging
             if self.action:
                 self.action()

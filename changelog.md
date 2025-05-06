@@ -39,3 +39,14 @@ Quick extra commit
 Added notes.txt file
 Put font.py with the rest of the UI to keep it neat and packaged
 -----------------------------------------------------------------
+05/06 12:39
+
+Created Pause menu
+Made the size bar a little more modular allowing it to be placed on either the left or the bottom
+Added a main menu
+Put all entities in entities directory
+Created APPSTATE FSM
+All states in the FSM handle pausing, game over, win, main menu, and playing states
+These are all states for the app itself and are contextually accurate in the context of the game itself being the focus of the application as a whole
+There is now an animated main menu to start the game
+-----------------------------------------------------

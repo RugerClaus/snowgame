@@ -7,27 +7,7 @@ class Player:
         self.levels = [
             20,
             30,
-            40,
-            50,
-            60,
-            70,
-            80,
-            90,
-            100,
-            110,
-            120,
-            130,
-            140,
-            150,
-            160,
-            170,
-            180,
-            185,
-            190,
-            195,
-            200,
-            205,
-            210,
+
         ]
         self.snow_fall_thresholds = [
             10000,
@@ -145,7 +125,7 @@ class Player:
                 self.powerup = False
                 self.level_up_size = self.levels[self.current_level - 1]
                 self.snow_fall_threshold = self.snow_fall_thresholds[self.current_level - 1]
-            print(self.current_level)                
+                            
             return True
         return False
     
