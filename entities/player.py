@@ -1,63 +1,14 @@
 import pygame
-import math
+import random
 
 class Player:
     def __init__(self, screen):
         self.screen = screen
-        self.levels = [
-            20,
-            30,
-            40,
-            50,
-            60,
-            70,
-            80,
-            90,
-            100,
-            110,
-            120,
-            130,
-            140,
-            150,
-            160,
-            170,
-            180,
-            185,
-            190,
-            195,
-            200,
-            205,
-            210,
-        ]
-        self.snow_fall_thresholds = [
-            10000,
-            9500,
-            9000,
-            8500,
-            8000,
-            7500,
-            7000,
-            6500,
-            6000,
-            5500,
-            5000,
-            4500,
-            4000,
-            3500,
-            3000,
-            2500,
-            2000,
-            1500,
-            1000,
-            750,
-            500,
-            250,
-            50,
-        ]
         self.reset()
         self.size = self.width
         self.powerup_duration = 5000
         self.powerup_start_time = 0
+        self.powerup_type = ""
         
     def draw(self):
         
@@ -85,10 +36,16 @@ class Player:
             self.shrink_rate = 0.1
         elif self.powerup:
             current_time = pygame.time.get_ticks()
-            self.shrink_rate = 0
-            self.surface.fill((0,255,22))
+            if self.powerup_type == "anti-shrink":
+                self.shrink_rate = 0
+                self.surface.fill((0,255,22))
+            if self.powerup_type == "grow_small":
+                self.shrink_rate = -0.02
+                self.surface.fill((255,22,0))
+
             if current_time - self.powerup_start_time >= self.powerup_duration:
                 self.powerup = False
+            
         else:
             self.shrink_rate = 0.01
 
@@ -96,9 +53,6 @@ class Player:
             self.alive = False 
         self.width = max(1, self.width - self.shrink_rate)
         self.height = max(1, self.height - self.shrink_rate)
-
-        if self.current_level > len(self.levels) - 1:
-            self.hasWon = True
 
         self.size = self.width
         self.rect.bottom = self.screen.get_height() - 100
@@ -115,36 +69,40 @@ class Player:
     def reset(self):
         self.width = 10
         self.height = 10
-        self.surface = pygame.surface.Surface((self.width,self.height))
+        self.surface = pygame.surface.Surface((self.width, self.height))
         self.rect = self.surface.get_rect()
-        self.surface.fill((255,255,255))
+        self.surface.fill((255, 255, 255))
         self.rect.bottom = self.screen.get_height() - 100
         self.start = self.screen.get_width() // 2
         self.rect.centerx = self.start
         self.speed = 5
         self.alive = True
-        self.level_up_size = self.levels[0]
-        self.snow_fall_threshold = self.snow_fall_thresholds[0]
+
         self.current_level = 1
-        self.hasWon = False
+        self.level_up_size = self.calculate_level_up_size(self.current_level)
+        self.snow_fall_threshold = self.calculate_snow_fall_threshold(self.current_level)
         self.score = 0
         self.powerup = False
 
-
     def check_level_up(self):
-
-        if self.current_level > len(self.levels):
-            return False
-
         if self.width >= self.level_up_size:
             self.current_level += 1
-            if self.current_level <= self.levels[self.current_level - 1] and self.current_level <= self.snow_fall_thresholds[self.current_level -1]:
-                self.width = 10
-                self.height = 10
-                self.powerup = False
-                self.level_up_size = self.levels[self.current_level - 1]
-                self.snow_fall_threshold = self.snow_fall_thresholds[self.current_level - 1]
-                            
+            self.level_up_size = self.calculate_level_up_size(self.current_level)
+            self.snow_fall_threshold = self.calculate_snow_fall_threshold(self.current_level)
+
+            self.width = 10
+            self.height = 10
+            self.powerup = False
             return True
+
         return False
-    
+            
+    def randomize_snowfall_behavior(self):
+
+        if random.random() < 0.1:
+            self.snow_fall_threshold = max(100,self.snow_fall_threshold - random.randint(50,200))
+    def calculate_level_up_size(self, level):
+        return 10 + (level - 1) * 10  # e.g., level 1 = 10, level 2 = 20, etc.
+
+    def calculate_snow_fall_threshold(self, level):
+        return max(100, 500 - level * 50)

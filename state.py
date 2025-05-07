@@ -6,4 +6,3 @@ class APPSTATE(Enum):
     PLAYING = auto()
     PAUSED = auto()
     GAME_OVER = auto()
-    WON = auto()

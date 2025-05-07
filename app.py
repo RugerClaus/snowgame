@@ -64,10 +64,12 @@ class App:
 
     def restart(self):
         self.sound.stop_music()
-        self.player.reset()
+        
         self.snow_flakes = []
         self.rocks = []
         start_time = pygame.time.get_ticks()
+        self.player = Player(self.screen)
+        self.player.current_level = 1
         self.ui = PlayerUI(self.screen,self.player,start_time)
         self.win_music_played = False
         self.state.set_app_state(APPSTATE.PLAYING)
@@ -90,27 +92,27 @@ class App:
     
     def go_to_menu(self):
         print("Going to menu")
-        
+
         self.sound.stop_music()
         self.sound.stop_sfx()
 
-        
-        if pygame.display.get_init() == False:  
+        if pygame.display.get_init() == False:
             pygame.display.init()
 
         self.state.set_app_state(APPSTATE.MAIN_MENU)
 
-        
-        self.main_menu = MainMenu(self.screen, self.play, self.quit_game)
-        self.ui = PlayerUI(self.screen, self.player, self.start_time)
-        self.player = Player(self.screen)  
+        self.player = Player(self.screen)
+        self.player.current_level = 1  # <-- Reset level here!
 
-        
+        self.main_menu = MainMenu(self.screen, self.play, self.quit_game)
+
+        self.start_time = pygame.time.get_ticks()  # Optional: reset game timer
+        self.ui = PlayerUI(self.screen, self.player, self.start_time)
+
         self.screen.fill((0, 0, 0))
         self.main_menu.update()
         self.main_menu.draw()
 
-        
         pygame.display.flip()
 
     def handle_events(self):
@@ -135,6 +137,7 @@ class App:
             self.game_over.handle_event(event)
             self.win.handle_event(event)
             self.main_menu.handle_event(event)
+            self.sound.handle_event(event)
 
 
     def main(self):
@@ -146,27 +149,31 @@ class App:
 
             self.handle_events()
             if self.state.is_app_state(APPSTATE.PLAYING):
-                    self.sound.check_and_play_next_track()
-                    
-
 
                     if current_time - self.last_flake_spawn_time > self.flake_spawn_interval and len(self.snow_flakes) < self.player.snow_fall_threshold:
                         self.snow_flakes.append(Snow(self.screen))
                         self.last_flake_spawn_time = current_time
                         self.flake_spawn_interval = random.randint(0,200)
 
-                        if self.player.current_level > 3:
-                            if current_time - self.last_rock_stop_time > self.rock_spawn_interval and len(self.rocks) < 30:
-                                self.rocks.append(Rock(self.screen))
-                                self.last_rock_stop_time = current_time
-                                self.rock_spawn_interval = random.randint(2000,6000)
+                    if current_time - self.last_rock_stop_time > self.rock_spawn_interval and len(self.rocks) < 30 and self.player.current_level >= 3:
+                        self.rocks.append(Rock(self.screen))
+                        self.last_rock_stop_time = current_time
+                        self.rock_spawn_interval = random.randint(2000,6000)
+                    elif self.player.current_level < 3:
+                        self.rocks = []
 
-                        if self.player.current_level > 5:
-                            if current_time - self.last_power_up_start_time > self.power_up_spawn_interval and len(self.power_ups) < 15:
-                                self.power_ups.append(Powerup(self.screen))
-                                self.last_power_up_start_time = current_time
-                                self.power_up_spawn_interval = random.randint(4000,10000)
+                    if current_time - self.last_power_up_start_time > self.power_up_spawn_interval and len(self.power_ups) < 15 and self.player.current_level >= 5:
+                        if self.player.current_level >= 10:
+                            powerup_type = random.choice(["anti-shrink", "grow_small"])
+                        elif self.player.current_level < 10:
+                            powerup_type = random.choice(["anti-shrink"])
 
+                        self.power_ups.append(Powerup(self.screen, powerup_type=powerup_type))
+                        self.last_power_up_start_time = current_time
+                        self.power_up_spawn_interval = random.randint(4000, 10000)
+                    elif self.player.current_level < 5:
+                        self.power_ups = []
+                            
                     self.screen.fill((0,0,0))
 
 
@@ -209,36 +216,27 @@ class App:
                         if collide(self.player,power_up):
                             
                             self.player.powerup = True
+                            self.player.powerup_type = power_up.type
                             self.player.powerup_start_time = pygame.time.get_ticks()
-
                             power_up.reset()
                             
                     self.ui.update()
                     self.ui.draw()
+                    self.ui.draw_track_playing(self.sound.current_track)
+
                     if not self.player.alive:
                         self.state.set_app_state(APPSTATE.GAME_OVER)
-                    if self.player.hasWon:
-                        self.sound.stop_music()
-                        self.state.set_app_state(APPSTATE.WON)
 
             elif self.state.is_app_state(APPSTATE.PAUSED):
                 self.pause_menu.update()
                 self.pause_menu.draw()
+                
                 
             elif self.state.is_app_state(APPSTATE.GAME_OVER):
                 self.sound.stop_music()
                 self.sound.stop_sfx()
                 self.game_over.update()
                 self.game_over.draw()
-
-            elif self.state.is_app_state(APPSTATE.WON):
-                self.sound.stop_music()
-                if not self.win_music_played:
-                    self.sound.play_sfx("win")
-                    self.win_music_played = True
-                self.win.update()
-                self.win.draw()
-                
             
             elif self.state.is_app_state(APPSTATE.MAIN_MENU):
                 self.main_menu.update()

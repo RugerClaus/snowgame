@@ -28,3 +28,10 @@ the things that fit together. Entities are now all gathered in one place.
 I have added a shit load of sounds and other QOL improvements that make the game feel more like a game. 
 
 I think I'll next need to focus on adding more enemimes and perhaps creating different difficulty levels or perhaps having infinite levels with increasing entropy.
+
+------------------------
+
+I need to add a tutorial at the first level. Start the game but freeze it and prompt the player to press "a" or "d" to move left/right. Perhaps when the first snowflake hits
+screen height/2 freeze the game and instruct the player to catch the snowflake
+
+make that it's own mode

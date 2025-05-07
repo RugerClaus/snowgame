@@ -11,12 +11,12 @@ class PlayerUI:
         self.font = pygame.font.SysFont("Arial", 18)
 
     def draw(self):
-        self.surface.fill((0, 0, 0, 0))  # transparent clear
+        self.surface.fill((0, 0, 0, 0))  
 
-        # Draw size progress bar
+        
         self.draw_size_bar("bottom")
 
-        # Draw timer
+        
         elapsed_ms = pygame.time.get_ticks() - self.start_time
         seconds = (elapsed_ms // 1000) % 60
         minutes = (elapsed_ms // 60000)
@@ -24,12 +24,12 @@ class PlayerUI:
         time_surface = self.font.render(time_text, True, (255, 255, 255))
         self.surface.blit(time_surface, (10, 10))
 
-        # Draw current size
+        
         size_text = f"Size: {int(self.player.size)}"
         size_surface = self.font.render(size_text, True, (255, 255, 255))
         self.surface.blit(size_surface, (10, 40))
 
-        # Draw current level
+        
         level_text = f"Level: {self.player.current_level}"
         level_surface = self.font.render(level_text, True, (255, 255, 255))
         self.surface.blit(level_surface, (10, 70))
@@ -64,10 +64,10 @@ class PlayerUI:
 
             outline_rect = pygame.Rect(self.screen.get_width() // 4, self.screen.get_height() - 50, bar_width, bar_height)
             fill_rect = pygame.Rect(
-                outline_rect.left + 2,       # small padding from the left
-                outline_rect.top + 2,        # small padding from the top
-                fill_width - 4,              # adjust for left/right padding
-                bar_height - 4               # adjust for top/bottom padding
+                outline_rect.left + 2,       
+                outline_rect.top + 2,        
+                fill_width - 4,              
+                bar_height - 4               
             )
 
             fill_color = (
@@ -82,15 +82,15 @@ class PlayerUI:
             progress = min(size_avg / self.player.level_up_size, 1.0)
             fill_height = bar_height * progress
 
-            # Vertical bar aligned at x = 50 and near bottom of the screen
+
             outline_rect = pygame.Rect(50, self.screen.get_height() - bar_height - 50, bar_width, bar_height)
             
-            # Filled portion grows from bottom up
+            
             fill_rect = pygame.Rect(
                 outline_rect.left + 2,
-                outline_rect.bottom - fill_height + 2,  # start from bottom, add padding
+                outline_rect.bottom - fill_height + 2,  
                 bar_width - 4,
-                fill_height - 4 if fill_height >= 4 else 0  # prevent negative height
+                fill_height - 4 if fill_height >= 4 else 0  
             )
 
             fill_color = (
@@ -102,6 +102,11 @@ class PlayerUI:
 
         pygame.draw.rect(self.surface, fill_color, fill_rect)
         pygame.draw.rect(self.surface, (255, 255, 255), outline_rect, 2)
+
+    def draw_track_playing(self,sound): # sound should be the output of App.sound.current_track
+        text = self.font.render(f"Now Playing: {sound}", True,(255,255,255))
+        
+        self.screen.blit(text,(10,160))
 
     def update(self):
         current_width, current_height = self.screen.get_size()

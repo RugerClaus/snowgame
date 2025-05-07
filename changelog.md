@@ -66,3 +66,15 @@ Dances With Synths
 Added more functionality to sound engine
 Added sound effects for picking up snow
 Added sound effect for active power up use
+------------------------------------------
+05/06 23:02
+
+Added new power up
+Added power up types
+Added functionality for multiple power ups
+Levels are now procedurally generated
+There are no more win screens
+The levels are infinite and will increase with difficulty each level
+Fixed the sound engine bug where it would keep repeating the same song
+Songs play randomly during gameplay.
+-------------------------------------
