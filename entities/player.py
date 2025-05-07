@@ -27,27 +27,31 @@ class Player:
 
         self.rect.centerx = old_centerx
         self.rect.bottom = old_bottom
-
-        if self.width > 50 and not self.powerup:
+        
+        if self.width >= 50:
             self.shrink_rate = 1
-        elif self.width > 40 and not self.powerup:
+        elif self.width >= 40:
             self.shrink_rate = 0.5
-        elif self.width > 10 and not self.powerup:
+        elif self.width >= 10:
             self.shrink_rate = 0.1
-        elif self.powerup:
+        else:
+            self.shrink_rate = 0.01
+
+        if self.powerup:
             current_time = pygame.time.get_ticks()
-            if self.powerup_type == "anti-shrink":
+            if self.powerup_type == "anti_shrink":
                 self.shrink_rate = 0
                 self.surface.fill((0,255,22))
-            if self.powerup_type == "grow_small":
+            elif self.powerup_type == "grow_small":
                 self.shrink_rate = -0.02
                 self.surface.fill((255,22,0))
+            elif self.powerup_type == "absorb_rock":
+                self.surface.fill((22,0,255))
+                if current_time - self.powerup_start_time >= self.powerup_duration:
+                    self.powerup = False
 
             if current_time - self.powerup_start_time >= self.powerup_duration:
                 self.powerup = False
-            
-        else:
-            self.shrink_rate = 0.01
 
         if self.width <= 1:
             self.alive = False 
@@ -57,6 +61,16 @@ class Player:
         self.size = self.width
         self.rect.bottom = self.screen.get_height() - 100
 
+        if self.score >= 10000:
+            self.powerup_duration = 6000
+        elif self.score >= 20000:
+            self.powerup_duration = 6500
+        elif self.score >= 50000:
+            self.powerup_duration = 6870
+        elif self.score >= 100000:
+            self.powerup_duration = 7500
+        elif self.score >= 175000:
+            self.powerup_duration = 8000
 
 
     def handle_input(self):
@@ -105,4 +119,4 @@ class Player:
         return 10 + (level - 1) * 10  # e.g., level 1 = 10, level 2 = 20, etc.
 
     def calculate_snow_fall_threshold(self, level):
-        return max(100, 500 - level * 50)
+        return max(100, 600 - level * 50)

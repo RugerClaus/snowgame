@@ -29,8 +29,8 @@ class PlayerUI:
         size_surface = self.font.render(size_text, True, (255, 255, 255))
         self.surface.blit(size_surface, (10, 40))
 
-        
-        level_text = f"Level: {self.player.current_level}"
+
+        level_text = f"Level: {self.player.current_level -1}"
         level_surface = self.font.render(level_text, True, (255, 255, 255))
         self.surface.blit(level_surface, (10, 70))
 

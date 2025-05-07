@@ -36,3 +36,5 @@ class Button:
             # print(f"Button {self.text} clicked!")  # Debugging
             if self.action:
                 self.action()
+            if not self.action: #needed edge case for buttons that do nothing
+                self.action = None

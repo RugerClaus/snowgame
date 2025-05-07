@@ -78,3 +78,16 @@ The levels are infinite and will increase with difficulty each level
 Fixed the sound engine bug where it would keep repeating the same song
 Songs play randomly during gameplay.
 -------------------------------------
+05/07 14:01
+
+Added menu music
+Added new powerup - Absorb rock
+Changed the way powerups spawn
+Absorb rock is now the most basic power up. It makes rocks behave the same as snowflakes
+Added restart button to Pause Menu
+Updated game instructions in README
+Added multiple game mode framework
+Moved all game logic to Mode class
+Every mode is a method on the Mode object instantiated in the App class
+-- this is so that I can shrink my main_loop a bit and focus logic in it's own place. I'll probably shrink and encapusulate that logic further
+-- -- Using encapsulation, I'll shrink every if block into its own method

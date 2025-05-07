@@ -21,12 +21,20 @@ class SoundManager:
             "pickup_snow": "sounds/snow.wav",
             "powerup_active": "sounds/powerup_active.wav"
         }
+        self.menu_music = "sounds/menu.wav"
         self.volume = volume
         self.music_active = True
         self.sfx_active = True
         self.music_queue = list(self.music_tracks.keys())
         random.shuffle(self.music_queue)
         self.current_track = None
+
+    def play_menu_music(self):
+        if not pygame.mixer.music.get_busy():
+            pygame.mixer.music.load(self.menu_music)
+            pygame.mixer.music.set_volume(self.volume)
+            pygame.mixer.music.play(1)
+            print("Playing menu music")
 
     def _play_next_track(self):
         if not self.music_active:
@@ -45,7 +53,7 @@ class SoundManager:
         pygame.mixer.music.set_volume(self.volume)
         pygame.mixer.music.play()  
         self.current_track = next_track
-        print(f"Now playing: {next_track}")
+        
 
     def handle_event(self, event):
         if event.type == self.MUSIC_END_EVENT and self.music_active:

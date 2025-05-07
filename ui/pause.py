@@ -3,9 +3,10 @@ from ui.button import Button
 from ui.font import FontEngine
 
 class PauseMenu:
-    def __init__(self, screen, resume_callback, go_to_menu_callback, quit_callback):
+    def __init__(self, screen, resume_callback, restart_callback, go_to_menu_callback, quit_callback):
         self.screen = screen
         self.resume_callback = resume_callback
+        self.restart_callback = restart_callback
         # self.music_toggle_callback = music_toggle_callback
         # self.sfx_toggle_callback = sfx_toggle_callback
         self.go_to_menu_callback = go_to_menu_callback
@@ -27,6 +28,7 @@ class PauseMenu:
 
         self.buttons = [
             Button("Resume", center_x, start_y + spacing * 0, width, height, (50, 100, 200), (255, 255, 255), self.resume_callback),
+            Button("Restart", center_x, start_y + spacing * 1.25, width, height, (50, 100, 200), (255, 255, 255), self.restart_callback),
             Button("Main Menu", center_x, start_y + spacing * 2.5, width, height, (50, 100, 200), (255, 255, 255), self.go_to_menu_callback),
             Button("Exit", center_x, start_y + spacing * 5, width, height, (200, 50, 50), (255, 255, 255), self.quit_callback),
         ]
@@ -37,7 +39,7 @@ class PauseMenu:
             button.draw(self.screen, mouse_pos)
 
         text = self.font.render("PAUSED", True, (255, 255, 255))
-        rect = text.get_rect(center=(self.screen.get_width() // 2, 100))
+        rect = text.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2))
         self.screen.blit(text, rect)
 
     def handle_event(self, event):

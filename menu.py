@@ -4,9 +4,9 @@ from ui.button import Button
 from entities.animate import Animation
 
 class MainMenu:
-    def __init__(self, screen, new_game_callback, quit_callback):
+    def __init__(self, screen, endless_game, quit_callback):
         self.screen = screen
-        self.new_game_callback = new_game_callback
+        self.endless_game = endless_game
         self.quit_callback = quit_callback
 
         # Load static assets
@@ -47,12 +47,16 @@ class MainMenu:
         screen_w, screen_h = self.screen.get_size()
         btn_width, btn_height = 200, 50
         spacing = 70
-        start_y = screen_h // 2
+        start_y = screen_h // 4 + screen_h // 7
 
         center_x = screen_w // 2
+        unavailable_color = (128,128,150)
         self.buttons = [
-            Button("Play!", center_x, start_y, btn_width, btn_height, (255, 255, 255), (200, 200, 0), self.new_game_callback),
-            Button("Quit", center_x, start_y + spacing * 2, btn_width, btn_height, (255, 255, 255), (200, 200, 0), self.quit_callback),
+            Button("Endless Mode", center_x, start_y, btn_width + 80, btn_height, (255, 255, 255), (128, 0, 200), self.endless_game),
+            Button("Timed Mode", center_x, start_y + spacing * 1, btn_width + 80, btn_height, unavailable_color, (128, 190, 128)),
+            Button("Story Mode", center_x, start_y + spacing * 2, btn_width + 80, btn_height, unavailable_color, (128, 190, 128)),
+            Button("Tutorial Mode", center_x, start_y + spacing * 3, btn_width + 80, btn_height, unavailable_color, (128, 190, 128)),
+            Button("Quit", center_x, start_y + spacing * 4, btn_width, btn_height, (255, 255, 255), (255, 0, 80), self.quit_callback),
         ]
 
     def handle_event(self, event):
