@@ -7,7 +7,27 @@ class Player:
         self.levels = [
             20,
             30,
-
+            40,
+            50,
+            60,
+            70,
+            80,
+            90,
+            100,
+            110,
+            120,
+            130,
+            140,
+            150,
+            160,
+            170,
+            180,
+            185,
+            190,
+            195,
+            200,
+            205,
+            210,
         ]
         self.snow_fall_thresholds = [
             10000,
@@ -41,7 +61,6 @@ class Player:
         
     def draw(self):
         
-        # Draw the rotated image at the player's center position
         self.screen.blit(self.surface, self.rect)
 
     def update(self):
@@ -88,9 +107,9 @@ class Player:
 
     def handle_input(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_a]:  # Move left and rotate left
+        if keys[pygame.K_a]:
             self.rect.centerx -= self.speed
-        if keys[pygame.K_d]:  # Move right and rotate right
+        if keys[pygame.K_d]:
             self.rect.centerx += self.speed
 
     def reset(self):

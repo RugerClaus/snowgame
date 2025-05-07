@@ -18,3 +18,13 @@ Perhaps have the fonts as individual objects to give the developer a way to cust
 
 I may just make a font package with preset fonts however. This seems like a more clear direction to make it easier for the game developer to spend less time dealing with thinking
 about fonts and more about creating their game using easily customizeable UI components.
+
+--------------------
+
+
+Ooof I definitely didn't look at this in the last week. But I have compartmentalized most of the game. There's no core right now, since I'm trying to only structure
+the things that fit together. Entities are now all gathered in one place.
+
+I have added a shit load of sounds and other QOL improvements that make the game feel more like a game. 
+
+I think I'll next need to focus on adding more enemimes and perhaps creating different difficulty levels or perhaps having infinite levels with increasing entropy.

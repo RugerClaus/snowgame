@@ -50,3 +50,19 @@ All states in the FSM handle pausing, game over, win, main menu, and playing sta
 These are all states for the app itself and are contextually accurate in the context of the game itself being the focus of the application as a whole
 There is now an animated main menu to start the game
 -----------------------------------------------------
+05/06 19:14
+
+Added main menu button to the Win menu
+Tightened up state logic and state change logic
+Added randomized tracks
+Changed win sound to a SFX
+Added multiple music tracks:
+Isle of Atmospheres
+Wobble Doom
+Millenia
+Minty Awakening
+Late Night Sezsh
+Dances With Synths
+Added more functionality to sound engine
+Added sound effects for picking up snow
+Added sound effect for active power up use

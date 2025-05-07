@@ -22,7 +22,7 @@ class PauseMenu:
         spacing = 60
         screen_w = self.screen.get_width()
         screen_h = self.screen.get_height()
-        center_x = screen_w // 2
+        center_x = screen_w // 4 + screen_w // 2
         start_y = screen_h // 2 - (spacing * 3)
 
         self.buttons = [
