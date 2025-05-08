@@ -123,3 +123,5 @@ I have fixed this bug by updating the state for event handling in the menus
 pause and main menus were interfering with each other and the game window
 begone bug
 ----------
+
+Another bug fix. This time the pause menu wasn't working. need to make sure to have the app class account for the events rather than the pause menu

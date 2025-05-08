@@ -56,7 +56,7 @@ class App:
             self.mode.start_time = pygame.time.get_ticks()
             self.player = Player(self.screen)
             self.player.current_level = 1
-            self.mode = Mode(self.screen, self.player, self.state,self.win)
+            self.mode = Mode(self.screen, self.player, self.state)
             self.state.set_app_state(self.state.previous_app_state)
             self.sound.force_play_music()
         pygame.display.flip()
@@ -165,7 +165,7 @@ class App:
                 if event.key == pygame.K_F7:
                     print(f"current track: {self.sound.current_track}")
             
-            if self.state.is_app_state(APPSTATE.PAUSED):
+            if not self.state.is_app_state(APPSTATE.MAIN_MENU) or self.state.is_app_state(APPSTATE.GAME_OVER):
                 self.pause_menu.handle_event(event)
             elif self.state.is_app_state(APPSTATE.GAME_OVER):
                 self.game_over.handle_event(event)
