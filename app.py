@@ -9,11 +9,11 @@ from sound import SoundManager
 from menu import MainMenu
 from mode import Mode
 
-from state import APPSTATE,TUTORIALSTATE
-from statem import StateManager
+from FSM.state import APPSTATE,TUTORIALSTATE
+from FSM.statem import StateManager
 
 import pygame
-import random
+import sys
 
 
 class App:
@@ -213,10 +213,10 @@ class App:
                 self.main_menu.draw()
 
             elif self.state.is_app_state(APPSTATE.QUIT_APP):
-                pygame.quit()
-                
+                pygame.quit() #no longer gets traceback now that this is only handled in the FSM
+                sys.exit()
             pygame.display.flip()
-            self.clock.tick(60)
+            self.clock.tick(60)     
             # print(f"Current APPSTATE: {self.state.get_app_state()}")
             
-        pygame.quit()
+        

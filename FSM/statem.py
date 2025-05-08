@@ -1,4 +1,4 @@
-from state import APPSTATE,TUTORIALSTATE
+from FSM.state import APPSTATE,TUTORIALSTATE
 
 class StateManager:
 

@@ -102,3 +102,15 @@ Balanced out melting/shrinking mechanics since there are infinite levels and hav
 Added further state machine functionality
 Added new Tutorial Font
 -----------------------
+05/07 23:20
+
+Minor bug fixes
+Fixed APPSTATE.QUIT_APP handling letting the state machine take full control of quitting
+This worked like a charm and I got no more Traceback. 
+Updated Icon to be transparent for executable in taskbar.
+Currently only available for Windows until I can package it on my linux machine
+I will have someone else port it to Mac. Should be a simple matter of running pyinstaller.
+Going to do this on an older version of Ubuntu (20.04) to keep compatitiblity. Will have to spin that up
+
+Created first executable - https://unknownanarchist.blog/software/snowblitz
+------------------------

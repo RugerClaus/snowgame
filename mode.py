@@ -9,7 +9,7 @@ from ui.ui import PlayerUI
 from ui.tutorial import Tutorial
 
 
-from state import APPSTATE,TUTORIALSTATE
+from FSM.state import APPSTATE,TUTORIALSTATE
 
 
 class Mode:
