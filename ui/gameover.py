@@ -35,7 +35,9 @@ class GameOverMenu:
             mouse_pos = pygame.mouse.get_pos()
             for button in self.buttons:
                 button.is_clicked(mouse_pos, True)
-        if event.type == pygame.QUIT:
+        elif event.type == pygame.VIDEORESIZE:
+            self.update()
+        elif event.type == pygame.QUIT:
             pygame.quit()
 
     def update(self):

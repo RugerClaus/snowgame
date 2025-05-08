@@ -125,3 +125,9 @@ begone bug
 ----------
 
 Another bug fix. This time the pause menu wasn't working. need to make sure to have the app class account for the events rather than the pause menu
+
+-------------------------
+
+05/08 01:04
+Yet another bug fix.
+Game over menu now responsive and not conflicting. All menus accounted for.

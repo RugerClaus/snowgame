@@ -165,12 +165,14 @@ class App:
                 if event.key == pygame.K_F7:
                     print(f"current track: {self.sound.current_track}")
             
-            if not self.state.is_app_state(APPSTATE.MAIN_MENU) or self.state.is_app_state(APPSTATE.GAME_OVER):
+            if self.state.is_app_state(APPSTATE.PAUSED) or self.state.is_app_state(APPSTATE.ENDLESS) or self.state.is_app_state(APPSTATE.TUTORIAL):
                 self.pause_menu.handle_event(event)
-            elif self.state.is_app_state(APPSTATE.GAME_OVER):
-                self.game_over.handle_event(event)
+                
             elif self.state.is_app_state(APPSTATE.MAIN_MENU):
                 self.main_menu.handle_event(event)
+            
+            elif self.state.is_app_state(APPSTATE.GAME_OVER):
+                self.game_over.handle_event(event)
             self.sound.handle_event(event)
 
 
