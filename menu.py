@@ -45,6 +45,7 @@ class MainMenu:
         self.title_rect = self.title_image.get_rect(center=(screen_w // 2, int(screen_h * 0.2)))
 
     def create_buttons(self):
+        self.buttons = []
         screen_w, screen_h = self.screen.get_size()
         btn_width, btn_height = 200, 50
         spacing = 70
@@ -54,8 +55,8 @@ class MainMenu:
         unavailable_color = (128,128,150)
         self.buttons = [
             Button("Endless Mode", center_x, start_y, btn_width + 80, btn_height, (255, 255, 255), (128, 0, 200), self.endless_game),
-            Button("Timed Mode", center_x, start_y + spacing * 1, btn_width + 80, btn_height, unavailable_color, (128, 190, 128)),
-            Button("Story Mode", center_x, start_y + spacing * 2, btn_width + 80, btn_height, unavailable_color, (128, 190, 128)),
+            Button("Timed Mode", center_x, start_y + spacing * 1, btn_width + 80, btn_height, unavailable_color, (128, 190, 128),active=False),
+            Button("Story Mode", center_x, start_y + spacing * 2, btn_width + 80, btn_height, unavailable_color, (128, 190, 128),active=False),
             Button("Tutorial Mode", center_x, start_y + spacing * 3, btn_width + 80, btn_height, (255, 255, 255), (128, 0, 200),self.tutorial),
             Button("Quit", center_x, start_y + spacing * 4, btn_width, btn_height, (255, 255, 255), (255, 0, 80), self.quit_callback),
         ]

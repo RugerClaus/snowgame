@@ -113,4 +113,13 @@ I will have someone else port it to Mac. Should be a simple matter of running py
 Going to do this on an older version of Ubuntu (20.04) to keep compatitiblity. Will have to spin that up
 
 Created first executable - https://unknownanarchist.blog/software/snowblitz
-------------------------
+----------------------------------------------------------------------------
+
+05/08 00:37
+
+Major bug fix
+There has been a bug where if you click at certain spots on the screen you'd close the game or do some other action
+I have fixed this bug by updating the state for event handling in the menus
+pause and main menus were interfering with each other and the game window
+begone bug
+----------

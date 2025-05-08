@@ -14,6 +14,7 @@ class WinMenu:
         self.update()  # create buttons initially
 
     def update(self):
+        self.buttons = []
         self.buttons = [
             Button("Restart", self.screen.get_width() / 4, self.screen.get_height() // 2, 175, 40, (50, 50, 200), (255, 255, 255), self.restart_callback),
             Button("Main Menu", self.screen.get_width() / 2, self.screen.get_height() // 2+100, 175, 40, (50, 50, 200), (255, 255, 255), self.main_menu_callback),

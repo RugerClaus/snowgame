@@ -18,6 +18,7 @@ class PauseMenu:
         self.create_buttons()
 
     def create_buttons(self):
+        self.buttons = []
         width = 175
         height = 40
         spacing = 60

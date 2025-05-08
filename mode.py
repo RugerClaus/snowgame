@@ -13,11 +13,10 @@ from FSM.state import APPSTATE,TUTORIALSTATE
 
 
 class Mode:
-    def __init__(self,screen,player,state,win):
+    def __init__(self,screen,player,state):
         self.screen = screen
         self.player = player
         self.state = state
-        self.win = win
 
         self.start_time = pygame.time.get_ticks()
 

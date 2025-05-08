@@ -2,7 +2,6 @@ from entities.player import Player
 
 from ui.gameover import GameOverMenu
 from ui.pause import PauseMenu
-from ui.win import WinMenu
 from sound import SoundManager
 
 
@@ -39,8 +38,7 @@ class App:
         self.pause_menu = PauseMenu(self.screen,self.pause_state_toggle, self.restart,self.go_to_menu,self.quit_game)
 
         self.state = StateManager()
-        self.win = WinMenu(self.screen,self.restart,self.go_to_menu,self.quit_game)
-        self.mode = Mode(self.screen,self.player,self.state,self.win)
+        self.mode = Mode(self.screen,self.player,self.state)
         
 
     def quit_game(self):
@@ -83,7 +81,7 @@ class App:
         self.mode.start_time = pygame.time.get_ticks()
         self.player = Player(self.screen)
         self.player.current_level = 1
-        self.mode = Mode(self.screen,self.player,self.state,self.win)
+        self.mode = Mode(self.screen,self.player,self.state)
         self.state.set_app_state(APPSTATE.ENDLESS)
         self.sound.force_play_music()
 
@@ -105,7 +103,7 @@ class App:
         self.player = Player(self.screen)
         self.player.alive = True
         self.player.current_level = 1
-        self.mode = Mode(self.screen, self.player, self.state,self.win)
+        self.mode = Mode(self.screen, self.player, self.state)
 
         self.state.set_tutorial_state(TUTORIALSTATE.RESET)
         self.state.set_app_state(APPSTATE.TUTORIAL)
@@ -157,16 +155,22 @@ class App:
             elif event.type == pygame.VIDEORESIZE:
                 width, height = event.size
                 screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
+                self.screen = screen
                 self.mode.ui.screen = screen
                 self.player.screen = screen
                 self.game_over.screen = screen
+                self.pause_menu.screen = screen
+                self.main_menu.screen = screen
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_F7:
                     print(f"current track: {self.sound.current_track}")
             
-            self.pause_menu.handle_event(event)
-            self.game_over.handle_event(event)
-            self.main_menu.handle_event(event)
+            if self.state.is_app_state(APPSTATE.PAUSED):
+                self.pause_menu.handle_event(event)
+            elif self.state.is_app_state(APPSTATE.GAME_OVER):
+                self.game_over.handle_event(event)
+            elif self.state.is_app_state(APPSTATE.MAIN_MENU):
+                self.main_menu.handle_event(event)
             self.sound.handle_event(event)
 
 
@@ -176,25 +180,14 @@ class App:
         while self.state.get_app_state() != APPSTATE.QUIT_APP:
             
             current_time = pygame.time.get_ticks()
-
             self.handle_events()
             if self.state.is_app_state(APPSTATE.ENDLESS):
-
+                
                 self.mode.endless(current_time,self.sound)
 
             elif self.state.is_app_state(APPSTATE.TUTORIAL):
-
+                
                 self.mode.tutorial(current_time,self.sound)
-
-            elif self.state.is_app_state(APPSTATE.WIN):
-                self.sound.stop_music()
-                self.sound.stop_sfx()
-                self.win.update()
-                self.win.draw()
-                
-                self.sound.play_sfx("win")
-                
-                pygame.display.flip()
 
             elif self.state.is_app_state(APPSTATE.PAUSED):
                 self.pause_menu.update()

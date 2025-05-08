@@ -14,6 +14,7 @@ class GameOverMenu:
         self.create_buttons()
 
     def create_buttons(self):
+        self.buttons = []
         self.buttons = [
             Button("Restart", self.screen.get_width() / 4, self.screen.get_height() // 2, 175, 40, (200, 50, 50), (255, 255, 255), self.restart_callback),
             Button("Main Menu",self.screen.get_width() / 2, self.screen.get_height() // 2+100, 175, 40, (200,50,50),(255,255,255),self.main_menu_callback),
