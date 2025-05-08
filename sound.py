@@ -15,6 +15,7 @@ class SoundManager:
             "Late Night Sezsh": "sounds/music4.wav",
             "Dances With Synths": "sounds/music5.wav",
             "Minty Awakening": "sounds/music6.wav",
+            "Lo-Fi-Si": "sounds/menu.wav"
         }
         self.sound_effects = {
             "win": "sounds/win.mp3",

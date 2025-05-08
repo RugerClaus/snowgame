@@ -13,6 +13,8 @@ class FontEngine():
             self.game_over_font()
         elif self.type == "back":
             self.go_back_font()
+        elif self.type == "tutorial":
+            self.tutorial_font()
         else:
             self.default_font()
 
@@ -20,11 +22,14 @@ class FontEngine():
         self.font = pygame.font.Font('font/Pixeltype.ttf', 50)
         
     def ui_font(self):
-        self.font = pygame.font.Font('font/Pixeltype.ttf', 40)
+        self.font = pygame.font.SysFont('Arial', 18)
     def game_over_font(self):
         self.font = pygame.font.Font('font/Pixeltype.ttf', 120)
     
     def go_back_font(self):
+        self.font = pygame.font.Font("font/Pixeltype.ttf", 60)
+
+    def tutorial_font(self):
         self.font = pygame.font.Font("font/Pixeltype.ttf", 60)
 
     def default_font(self):

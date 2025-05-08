@@ -6,8 +6,20 @@ _________________
 
 
 Licenses for original assets:
-Gameplay music in "sounds/music.wav"
-Winter Waves - Roger Falck
+
+SOUNDTRACK:
+Winter Waves - RugerClaus
+Isle of Atmospheres - RugerClaus
+Wobble Doom - RugerClaus
+Millenia - RugerClaus
+Late Night Sezsh - RugerClaus
+Dances With Synths - RugerClaus
+Minty Awakening - Rugerclaus
+Lo-Fi-Si - Rugerclaus
+
+SOUND EFFECTS:
+Pick Up Snow - RugerClaus
+Power Up Sound - RugerClaus
 
 You can use that song for whatever you'd like, but by downloading this you agree to give credit to my github url:
 https://github.com/rugerclaus

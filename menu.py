@@ -4,9 +4,10 @@ from ui.button import Button
 from entities.animate import Animation
 
 class MainMenu:
-    def __init__(self, screen, endless_game, quit_callback):
+    def __init__(self, screen, endless_game, tutorial, quit_callback):
         self.screen = screen
         self.endless_game = endless_game
+        self.tutorial = tutorial
         self.quit_callback = quit_callback
 
         # Load static assets
@@ -55,7 +56,7 @@ class MainMenu:
             Button("Endless Mode", center_x, start_y, btn_width + 80, btn_height, (255, 255, 255), (128, 0, 200), self.endless_game),
             Button("Timed Mode", center_x, start_y + spacing * 1, btn_width + 80, btn_height, unavailable_color, (128, 190, 128)),
             Button("Story Mode", center_x, start_y + spacing * 2, btn_width + 80, btn_height, unavailable_color, (128, 190, 128)),
-            Button("Tutorial Mode", center_x, start_y + spacing * 3, btn_width + 80, btn_height, unavailable_color, (128, 190, 128)),
+            Button("Tutorial Mode", center_x, start_y + spacing * 3, btn_width + 80, btn_height, (255, 255, 255), (128, 0, 200),self.tutorial),
             Button("Quit", center_x, start_y + spacing * 4, btn_width, btn_height, (255, 255, 255), (255, 0, 80), self.quit_callback),
         ]
 

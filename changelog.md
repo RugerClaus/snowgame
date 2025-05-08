@@ -91,3 +91,14 @@ Moved all game logic to Mode class
 Every mode is a method on the Mode object instantiated in the App class
 -- this is so that I can shrink my main_loop a bit and focus logic in it's own place. I'll probably shrink and encapusulate that logic further
 -- -- Using encapsulation, I'll shrink every if block into its own method
+--------------------------------------------------------------------------
+05/07 22:42
+
+Added tutorial mode
+Tutorial mode shows prompts to teach the player the game
+Tutorial mode reintroduced winning functionality
+Added secondary FSM (TUTORIALSTATE)
+Balanced out melting/shrinking mechanics since there are infinite levels and have a cap for that
+Added further state machine functionality
+Added new Tutorial Font
+-----------------------

@@ -27,13 +27,36 @@ class Player:
 
         self.rect.centerx = old_centerx
         self.rect.bottom = old_bottom
-        
-        if self.width >= 50:
+        if self.width >= 350:
             self.shrink_rate = 1
-        elif self.width >= 40:
+        elif self.width >= 325:
+            self.shrink_rate = 0.9
+        elif self.width >= 300:
+            self.shrink_rate = 0.8
+        elif self.width >= 275:
+            self.shrink_rate = 0.7
+        elif self.width >= 250:
+            self.shrink_rate = 0.6
+        elif self.width >= 225:
             self.shrink_rate = 0.5
-        elif self.width >= 10:
+        elif self.width >= 200:
+            self.shrink_rate = 0.4
+        elif self.width >= 175:
+            self.shrink_rate = 0.3
+        elif self.width >= 150:
+            self.shrink_rate = 0.2
+        elif self.width >= 125:
             self.shrink_rate = 0.1
+        elif self.width >= 100:
+            self.shrink_rate = 0.09
+        elif self.width >= 75:
+            self.shrink_rate = 0.08
+        elif self.width >= 50:
+            self.shrink_rate = 0.07
+        elif self.width >= 40:
+            self.shrink_rate = 0.05
+        elif self.width >= 10:
+            self.shrink_rate = 0.02
         else:
             self.shrink_rate = 0.01
 

@@ -35,3 +35,12 @@ I need to add a tutorial at the first level. Start the game but freeze it and pr
 screen height/2 freeze the game and instruct the player to catch the snowflake
 
 make that it's own mode
+
+-----------------------
+
+Well I have come a long way. It is version Alpha 1.0.0, and that means that this game is one step closer to complete.
+I have successfully added an extensible system for multiple modes.
+Well... actually it's a little messy, but that's one file, and I can always break it down later when I want to bloat the directory structure even more
+
+The next things to implement will be a ground, and a little moon. People like dark mode, so they can play at night. Perhaps I'll try simulating some lighting
+

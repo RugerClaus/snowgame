@@ -1,5 +1,5 @@
 import pygame
-
+from ui.font import FontEngine
 
 class PlayerUI:
     def __init__(self, screen, player, start_time, level_up_size=100):
@@ -8,7 +8,7 @@ class PlayerUI:
         self.rect = self.surface.get_rect()
         self.player = player
         self.start_time = start_time
-        self.font = pygame.font.SysFont("Arial", 18)
+        self.font = FontEngine("UI").font
 
     def draw(self):
         self.surface.fill((0, 0, 0, 0))  
