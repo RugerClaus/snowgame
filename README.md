@@ -1,8 +1,8 @@
 **REQUIRES PYTHON 3.10 MINIMUM**
 
-Licenses for third party assets:
-Winning sound effect in "sounds/win.mp3
-https://pixabay.com/sound-effects/049269-funny-fanfare-2wav-65260/
+<p>Licenses for third party assets:</p>
+<p>Winning sound effect in "sounds/win.mp3</p>
+<p>https://pixabay.com/sound-effects/049269-funny-fanfare-2wav-65260/</p>
 
 _________________
 
