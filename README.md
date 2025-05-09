@@ -23,7 +23,7 @@ SOUND EFFECTS:
 Pick Up Snow - RugerClaus
 Power Up Sound - RugerClaus
 
-You can use that song for whatever you'd like, but by downloading this you agree to give credit to my github url:
+You can use those songs for whatever you'd like, but by downloading this you agree to give credit to my github url:
 https://github.com/rugerclaus
 
 Run at your own risk
