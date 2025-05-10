@@ -6,8 +6,8 @@ class Snow:
         self.screen = screen
         self.current_level = 1
         self.size = random.randint(1,self.current_level * self.current_level + 1)
-        self.surface = pygame.Surface((self.size,self.size))  # create a 3x3 surface
-        self.surface.fill((255, 255, 255))     # fill it white (very important!)
+        self.surface = pygame.Surface((self.size,self.size))
+        self.surface.fill((255, 255, 255))     
         self.reset()
         self.rect = self.surface.get_rect()
 
@@ -15,7 +15,7 @@ class Snow:
         self.x = random.randint(0, self.screen.get_width())
         self.y = random.randint(-600, 0)
         self.size = random.randint(1,self.current_level + 9)
-        self.speed = self.size
+        self.speed = self.size + 3
         self.surface = pygame.Surface((self.size,self.size))
         self.surface.fill((255,255,255))
         self.rect = self.surface.get_rect()
@@ -25,7 +25,7 @@ class Snow:
         self.current_level = current_level
         self.y += self.speed // 4
         self.rect.topleft = (self.x, self.y)
-        if self.y > self.screen.get_height():
+        if self.y > self.screen.get_height() - 100:
             self.reset()
 
     def draw(self):

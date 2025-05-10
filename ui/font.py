@@ -15,6 +15,8 @@ class FontEngine():
             self.go_back_font()
         elif self.type == "tutorial":
             self.tutorial_font()
+        elif self.type == "reducer":
+            self.reducer_font()
         else:
             self.default_font()
 
@@ -31,6 +33,9 @@ class FontEngine():
 
     def tutorial_font(self):
         self.font = pygame.font.Font("font/Pixeltype.ttf", 60)
+
+    def reducer_font(self):
+        self.font = pygame.font.Font("font/Pixeltype.ttf", 40)
 
     def default_font(self):
         self.font = pygame.font.Font('font/Pixeltype.ttf', 25)

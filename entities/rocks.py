@@ -7,7 +7,7 @@ class Rock:
         self.y = -50
         self.width = random.randint(30,50)
         self.height = random.randint(30,50)
-        self.surface = pygame.Surface((self.width, self.height))  # create a 3x3 surface
+        self.surface = pygame.Surface((self.width, self.height))
         colors = [
             (112, 128, 144),  # Slate Gray
             (169, 169, 169),  # Dark Gray
@@ -23,7 +23,7 @@ class Rock:
             (108, 122, 137),  # Cool-toned shale
             (135, 115, 90),   # Desert rock
         ]
-        self.surface.fill(random.choice(colors))     # fill it white (very important!)
+        self.surface.fill(random.choice(colors))
         self.reset()
 
     def reset(self):
@@ -35,7 +35,7 @@ class Rock:
     def update(self):
         self.y += self.speed
         self.rect.topleft = (self.x, self.y)
-        if self.y > self.screen.get_height():
+        if self.y > self.screen.get_height() - 100:
             self.reset()
 
     def draw(self):

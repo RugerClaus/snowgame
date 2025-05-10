@@ -57,3 +57,12 @@ Resume the game
 Restart the game
 Go to the main menu
 Exit the game
+
+
+Level reducers:     introduced:
+50                              lvl 30
+100                             lvl 50
+125                             lvl 70
+130                             lvl 100
+145                             lvl 150
+160                             lvl 175

@@ -9,6 +9,9 @@ class Player:
         self.powerup_duration = 5000
         self.powerup_start_time = 0
         self.powerup_type = ""
+
+        self.reducer_start_time = 0
+        self.reducer_type = ""
         
     def draw(self):
         
@@ -75,6 +78,8 @@ class Player:
 
             if current_time - self.powerup_start_time >= self.powerup_duration:
                 self.powerup = False
+        
+        self.check_reducer()
 
         if self.width <= 1:
             self.alive = False 
@@ -114,7 +119,7 @@ class Player:
         self.rect.centerx = self.start
         self.speed = 5
         self.alive = True
-
+        self.reducer = False
         self.current_level = 1
         self.level_up_size = self.calculate_level_up_size(self.current_level)
         self.snow_fall_threshold = self.calculate_snow_fall_threshold(self.current_level)
@@ -138,8 +143,19 @@ class Player:
 
         if random.random() < 0.1:
             self.snow_fall_threshold = max(100,self.snow_fall_threshold - random.randint(50,200))
+
     def calculate_level_up_size(self, level):
-        return 10 + (level - 1) * 10  # e.g., level 1 = 10, level 2 = 20, etc.
+        return 10 + (level - 1) * 10
 
     def calculate_snow_fall_threshold(self, level):
-        return max(100, 600 - level * 50)
+        return max(950, 9500 - level * 2)
+    
+    def check_reducer(self):
+        if self.reducer:
+            if self.reducer_type == "level_reducer_fifty":
+                current_level_up_size = self.level_up_size
+                new_level_up_size = current_level_up_size - 50
+                self.level_up_size = new_level_up_size
+                self.reducer = False
+        else:
+            return

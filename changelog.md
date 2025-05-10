@@ -127,7 +127,17 @@ begone bug
 Another bug fix. This time the pause menu wasn't working. need to make sure to have the app class account for the events rather than the pause menu
 
 -------------------------
-
 05/08 01:04
+
 Yet another bug fix.
 Game over menu now responsive and not conflicting. All menus accounted for.
+--------------------------
+05/10 10:30
+
+Refactored Endless Mode logic and commented the shit out of it
+Refactored Tutorial Mode logic and made it a bit more neat
+Lowered spawn rate of power ups - May come up with some logic around this later
+Increased spawn rate of rocks
+Increased speed of snow
+Added new entity type
+Added Level Reducer
