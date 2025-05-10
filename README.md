@@ -52,6 +52,9 @@ SOUNDTRACK:
 <p>175000: 8 seconds</p>
 <p>Levels are infinite</p>
 <p>The player constantly melts - shrinks - over time. The shrink rate increases with size and can be slowed or stopped by collecting powerups</p>
+
+<p>As you level up you'll need to pick up level reducers to prevent from growing larger than the screen to level up</p>
+<p>I would like feedback on this challenge</p>
 _______________________
 
 <p>Press escape to pause the game</p>
