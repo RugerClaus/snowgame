@@ -35,6 +35,12 @@ class Tutorial():
             prompt_rect = prompt.get_rect(center=(self.screen.get_width()//2,self.screen.get_height()//2))
             self.screen.blit(prompt,prompt_rect)
 
+    def display_level_reducer_instructions(self):
+        if not self.player_has_continued:
+            prompt = self.font.render("Level Reducers start at level 15 \n \n They lower the size threshold to level \n up based on the number on the item\n \n This will help in later levels so \n you don't grow bigger than the screen \n \n Press SPACE to continue",True,(255,255,128))
+            prompt_rect = prompt.get_rect(center=(self.screen.get_width()//2,self.screen.get_height()//2))
+            self.screen.blit(prompt,prompt_rect)
+
     def display_end_screen(self):
         if not self.player_has_continued:
             prompt = self.font.render("Tutorial Complete! \n Good Job! \n \n Press SPACE to go to the main menu",True,(255,255,128))

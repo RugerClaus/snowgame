@@ -152,9 +152,19 @@ class Player:
     
     def check_reducer(self):
         if self.reducer:
-            if self.reducer_type == "level_reducer_fifty":
+            if self.reducer_type == "level_reducer_twenty":
+                current_level_up_size = self.level_up_size
+                new_level_up_size = current_level_up_size - 20
+                self.level_up_size = new_level_up_size
+                self.reducer = False
+            elif self.reducer_type == "level_reducer_fifty":
                 current_level_up_size = self.level_up_size
                 new_level_up_size = current_level_up_size - 50
+                self.level_up_size = new_level_up_size
+                self.reducer = False
+            elif self.reducer_type == "level_reducer_seventy":
+                current_level_up_size = self.level_up_size
+                new_level_up_size = current_level_up_size - 70
                 self.level_up_size = new_level_up_size
                 self.reducer = False
         else:

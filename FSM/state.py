@@ -18,5 +18,7 @@ class TUTORIALSTATE(Enum):
     ROCKS = auto()
     POWERUPS_PROMPT = auto()
     POWERUPS = auto()
+    LEVEL_REDUCER_PROMPT = auto()
+    LEVEL_REDUCERS = auto()
     WIN = auto()
     RESET = auto()

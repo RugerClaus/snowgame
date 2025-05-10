@@ -44,6 +44,7 @@ class Mode:
         self.snow_flakes = []
         self.rocks = []
         self.power_ups = []
+        self.level_reducers = []
         
         self.tutorialOBJ = Tutorial(self.screen,self.player)
         self.win_music_played = False
@@ -106,7 +107,6 @@ class Mode:
                 self.player.reducer_start_time = pygame.time.get_ticks()
                 reducer.reset()
 
-
     def endless(self,current_time,sound):
         
         # BEGIN NON-PLAYER ENTITY SPAWNING
@@ -137,14 +137,19 @@ class Mode:
         elif self.player.current_level < 6:
             self.power_ups = []
 
-        if current_time - self.last_level_reducer_start_time > self.level_reducer_spawn_interval and len(self.level_reducers) < 10 and self.player.current_level >= 6:
-            if self.player.current_level >= 6:
-                level_reducer_type = random.choice(["level_reducer_fifty"])
+        if current_time - self.last_level_reducer_start_time > self.level_reducer_spawn_interval and len(self.level_reducers) < 2 and self.player.current_level >= 16:
+            if self.player.current_level >= 51:
+                level_reducer_type = random.choice(["level_reducer_twenty","level_reducer_fifty","level_reducer_seventy"])
+            elif self.player.current_level >= 31:
+                level_reducer_type = random.choice(["level_reducer_twenty","level_reducer_fifty"])
+            elif self.player.current_level >=16:
+                level_reducer_type = random.choice(["level_reducer_twenty"])
+
             
             self.level_reducers.append(LevelReducer(self.screen,level_reducer_type))
             self.last_level_reducer_start_time = current_time
             self.level_reducer_spawn_interval = random.randint(7000,14000)
-        elif self.player.current_level < 6:
+        elif self.player.current_level < 16:
             self.level_reducers = []
 
         # END NON-PLAYER ENTITY SPAWNING
@@ -348,18 +353,108 @@ class Mode:
         elif self.player.current_level < 6:
             self.power_ups = []
 
+        if current_time - self.last_level_reducer_start_time > self.level_reducer_spawn_interval and len(self.level_reducers) < 2 and self.player.current_level >= 16:
+            if self.player.current_level >= 51:
+                level_reducer_type = random.choice(["level_reducer_twenty","level_reducer_fifty","level_reducer_seventy"])
+            elif self.player.current_level >= 31:
+                level_reducer_type = random.choice(["level_reducer_twenty","level_reducer_fifty"])
+            elif self.player.current_level >= 16:
+                level_reducer_type = random.choice(["level_reducer_twenty"])
+            
+            self.level_reducers.append(LevelReducer(self.screen,level_reducer_type))
+            self.last_level_reducer_start_time = current_time
+            self.level_reducer_spawn_interval = random.randint(7000,14000)
+
+        elif self.player.current_level < 6:
+            self.level_reducers = []
+
         self.handle_snow_flakes(sound)
 
         self.handle_rocks()
 
         self.handle_power_ups()
-        
+
         if self.player.check_level_up():
             print("clearing screen...")
             self.reset_entities()
 
-        if self.player.current_level > 21:
-            self.state.set_tutorial_state(TUTORIALSTATE.WIN)
+
+        for reducer in self.level_reducers:
+            reducer.update()
+            reducer.draw()
+
+            if reducer.y >= self.screen.get_height() // 2:
+                self.state.set_tutorial_state(TUTORIALSTATE.LEVEL_REDUCER_PROMPT)
+
+    def prompt_player_start_level_reducers(self):
+        self.tutorialOBJ.display_level_reducer_instructions()
+        self.tutorialOBJ.player_has_continued = False
+        self.tutorialOBJ.handle_continue()
+        if self.tutorialOBJ.player_has_continued:
+            self.state.set_tutorial_state(TUTORIALSTATE.LEVEL_REDUCERS)
+
+    def start_level_reducers(self,current_time,sound):
+        self.player.handle_input()
+        self.player.update()
+        self.ui.update()
+        self.ui.draw()
+        if self.player.powerup:
+            sound.play_sfx("powerup_active")
+        else:
+            sound.stop_sfx()
+        if current_time - self.last_flake_spawn_time > self.flake_spawn_interval and len(self.snow_flakes) < self.player.snow_fall_threshold:
+            self.snow_flakes.append(Snow(self.screen))
+            self.last_flake_spawn_time = current_time
+            self.flake_spawn_interval = random.randint(0,200)
+        if current_time - self.last_rock_start_time > self.rock_spawn_interval and len(self.rocks) < 30 and self.player.current_level >= 4:
+            self.rocks.append(Rock(self.screen))
+            self.last_rock_start_time = current_time
+            self.rock_spawn_interval = random.randint(2000,6000)
+        elif self.player.current_level < 4:
+            self.rocks = []
+        if current_time - self.last_power_up_start_time > self.power_up_spawn_interval and len(self.power_ups) < 15 and self.player.current_level >= 6:
+            if self.player.current_level >= 20:
+                powerup_type = random.choice(["absorb_rock","anti_shrink","grow_small"])
+            elif self.player.current_level >= 11:
+                powerup_type = random.choice(["absorb_rock", "anti_shrink"])
+            elif self.player.current_level < 11:
+                powerup_type = random.choice(["absorb_rock"])
+
+            self.power_ups.append(Powerup(self.screen, powerup_type=powerup_type))
+            self.last_power_up_start_time = current_time
+            self.power_up_spawn_interval = random.randint(4000, 10000)
+        elif self.player.current_level < 6:
+            self.power_ups = []
+
+        if current_time - self.last_level_reducer_start_time > self.level_reducer_spawn_interval and len(self.level_reducers) < 2 and self.player.current_level >= 16:
+            if self.player.current_level >= 51:
+                level_reducer_type = random.choice(["level_reducer_twenty","level_reducer_fifty","level_reducer_seventy"])
+            elif self.player.current_level >= 31:
+                level_reducer_type = random.choice(["level_reducer_twenty","level_reducer_fifty"])
+            elif self.player.current_level >= 16:
+                level_reducer_type = random.choice(["level_reducer_twenty"])
+            
+            self.level_reducers.append(LevelReducer(self.screen,level_reducer_type))
+            self.last_level_reducer_start_time = current_time
+            self.level_reducer_spawn_interval = random.randint(7000,14000)
+
+        elif self.player.current_level < 16:
+            self.level_reducers = []
+
+        self.handle_snow_flakes(sound)
+
+        self.handle_rocks()
+
+        self.handle_power_ups()
+
+        self.handle_level_reducers()
+
+        if self.player.check_level_up():
+            print("clearing screen...")
+            self.reset_entities()
+
+        if self.player.current_level >= 31:
+            self.set_tutorial_state(TUTORIALSTATE.WIN)
 
     def tutorial(self,current_time,sound):
         
@@ -377,6 +472,8 @@ class Mode:
             rock.draw()
         for powerup in self.power_ups:
             powerup.draw()
+        for reducer in self.level_reducers:
+            reducer.draw()
         
         if not self.player.alive:
             self.state.set_previous_app_state(self.state.get_app_state())
@@ -412,6 +509,14 @@ class Mode:
         elif self.state.is_tutorial_state(TUTORIALSTATE.POWERUPS):
             
             self.start_power_ups(current_time,sound)
+
+        elif self.state.is_tutorial_state(TUTORIALSTATE.LEVEL_REDUCER_PROMPT):
+            
+            self.prompt_player_start_level_reducers()
+
+        elif self.state.is_tutorial_state(TUTORIALSTATE.LEVEL_REDUCERS):
+            
+            self.start_level_reducers(current_time,sound)
 
         elif self.state.is_tutorial_state(TUTORIALSTATE.WIN):
             self.player.reset()

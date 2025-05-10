@@ -141,3 +141,10 @@ Increased spawn rate of rocks
 Increased speed of snow
 Added new entity type
 Added Level Reducer
+-------------------
+05/10 15:00
+
+Increased rock speeds
+Added multiple Level Reducer types
+Added Level Reducer to tutorial
+Added Level Reducer to TUTORIALSTATE transitions so that the tutorial doesn't break

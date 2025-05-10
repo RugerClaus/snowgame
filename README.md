@@ -62,10 +62,7 @@ _______________________
 <p>Exit the game</p>
 
 
-Level reducers:     introduced:
-50                              lvl 30
-100                             lvl 50
-125                             lvl 70
-130                             lvl 100
-145                             lvl 150
-160                             lvl 175
+<p>Level reducers:     introduced:</p>
+<p>20                              lvl 15</p>
+<p>50                              lvl 30</p>
+<p>100                             lvl 50</p>
