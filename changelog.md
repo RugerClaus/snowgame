@@ -148,3 +148,9 @@ Increased rock speeds
 Added multiple Level Reducer types
 Added Level Reducer to tutorial
 Added Level Reducer to TUTORIALSTATE transitions so that the tutorial doesn't break
+------------------------------------------------------------------------------------
+
+Added Physics
+-Rocks and snow are now affected by gravity. 
+-Powerups and other items will float down at a continuous speeds
+

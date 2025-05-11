@@ -12,13 +12,6 @@ from ui.tutorial import Tutorial
 
 from FSM.state import APPSTATE,TUTORIALSTATE
 
-
-# I hate pygame and drawing things frame by frame, but frankly 
-# it gives you a lot of control which you don't get with libraries like JavaFX
-# not that JavaFX is for making games, but frankly, this isn't either in all honestly. 
-# However, pygame.sprite.Sprite and pygame.mixer are fantastic tools.
-# This game doesn't really use pygame.sprite.Sprite yet however and probably won't for a long time.
-
 class Mode:
     def __init__(self,screen,player,state):
         self.screen = screen
@@ -47,15 +40,13 @@ class Mode:
         self.level_reducers = []
         
         self.tutorialOBJ = Tutorial(self.screen,self.player)
-        self.win_music_played = False
 
     def reset_entities(self):
         self.snow_flakes = []
         self.rocks = []
         self.power_ups = []
         self.level_reducers = []
-
-        
+  
     ### BEGIN ENDLESS GAME MODE ###
 
     def handle_snow_flakes(self,sound):

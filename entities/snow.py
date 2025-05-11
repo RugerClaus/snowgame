@@ -15,7 +15,7 @@ class Snow:
         self.x = random.randint(0, self.screen.get_width())
         self.y = random.randint(-600, 0)
         self.size = random.randint(1,self.current_level + 9)
-        self.speed = self.size + 3
+        self.speed = 2
         self.surface = pygame.Surface((self.size,self.size))
         self.surface.fill((255,255,255))
         self.rect = self.surface.get_rect()
@@ -23,7 +23,9 @@ class Snow:
 
     def update(self,current_level):
         self.current_level = current_level
-        self.y += self.speed // 4
+        acceleration = 0.05
+        self.speed += acceleration
+        self.y += self.speed
         self.rect.topleft = (self.x, self.y)
         if self.y > self.screen.get_height() - 100:
             self.reset()

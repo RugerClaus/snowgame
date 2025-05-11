@@ -1,13 +1,8 @@
 **REQUIRES PYTHON 3.10 MINIMUM**
-
-<p>Licenses for third party assets:</p>
-<p>Winning sound effect in "sounds/win.mp3</p>
-<p>https://pixabay.com/sound-effects/049269-funny-fanfare-2wav-65260/</p>
-
 _________________
 
 
-Licenses for original assets:
+License for original assets:
 
 SOUNDTRACK:
 <p>Winter Waves - RugerClaus</p>

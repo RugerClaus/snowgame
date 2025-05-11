@@ -29,10 +29,12 @@ class Rock:
     def reset(self):
         self.x = random.randint(0, self.screen.get_width())
         self.y = random.randint(-600, 0)
-        self.speed = 10
+        self.speed = 8
         self.rect = self.surface.get_rect(topleft=(self.x, self.y))
 
     def update(self):
+        acceleration = 0.1
+        self.speed += acceleration
         self.y += self.speed
         self.rect.topleft = (self.x, self.y)
         if self.y > self.screen.get_height() - 100:
