@@ -28,7 +28,7 @@ class App:
         icon = pygame.image.load("images/icon.png")
         pygame.display.set_icon(icon)
 
-        self.main_menu = MainMenu(self.screen,self.play_endless,self.play_tutorial,self.quit_game)
+        self.main_menu = MainMenu(self.screen,self.play_endless,self.play_timed,self.play_tutorial,self.quit_game)
         self.player = Player(self.screen)
 
         self.sound = SoundManager()
@@ -111,13 +111,34 @@ class App:
 
     def play_tutorial(self):
         if not self.state.is_app_state(APPSTATE.TUTORIAL):
-            self.state.set_app_state(APPSTATE.TUTORIAL)
             self.state.set_previous_app_state(self.state.get_app_state())
+            self.state.set_app_state(APPSTATE.TUTORIAL)
             self._init_tutorial()
             self.sound.set_volume(0.5)
             self.sound.force_play_music()
 
     # END TUTORIAL MODE
+
+    def _init_timed(self):
+        self.mode.snow_flakes = []
+        self.mode.rocks = []
+        self.mode.start_time = pygame.time.get_ticks()
+        self.player = Player(self.screen)
+        self.player.alive = True
+        self.player.current_level = 1
+        self.mode = Mode(self.screen,self.player,self.state)
+
+        self.state.set_app_state(APPSTATE.TIMED)
+        self.sound.force_play_music()
+        print(self.state.get_app_state())
+
+    def play_timed(self):
+        if not self.state.is_app_state(APPSTATE.TIMED):
+            self.state.set_previous_app_state(self.state.get_app_state)
+            self.state.set_app_state(APPSTATE.TIMED)
+            self._init_timed()
+            self.sound.set_volume(0.5)
+            self.sound.force_play_music()
 
     def go_to_menu(self):
         print("Going to menu")
@@ -137,7 +158,7 @@ class App:
         self.player = Player(self.screen)
         self.player.current_level = 1  # <-- Reset level here!
 
-        self.main_menu = MainMenu(self.screen, self.play_endless, self.play_tutorial, self.quit_game)
+        self.main_menu = MainMenu(self.screen, self.play_endless, self.play_timed, self.play_tutorial, self.quit_game)
 
         self.start_time = pygame.time.get_ticks()  # Optional: reset game timer
 
@@ -165,7 +186,10 @@ class App:
                 if event.key == pygame.K_F7:
                     print(f"current track: {self.sound.current_track}")
             
-            if self.state.is_app_state(APPSTATE.PAUSED) or self.state.is_app_state(APPSTATE.ENDLESS) or self.state.is_app_state(APPSTATE.TUTORIAL):
+            if (self.state.is_app_state(APPSTATE.PAUSED) or 
+                self.state.is_app_state(APPSTATE.ENDLESS) or 
+                self.state.is_app_state(APPSTATE.TUTORIAL) or
+                self.state.is_app_state(APPSTATE.TIMED)):
                 self.pause_menu.handle_event(event)
                 
             elif self.state.is_app_state(APPSTATE.MAIN_MENU):
@@ -190,6 +214,10 @@ class App:
             elif self.state.is_app_state(APPSTATE.TUTORIAL):
                 
                 self.mode.tutorial(current_time,self.sound)
+            
+            elif self.state.is_app_state(APPSTATE.TIMED):
+
+                self.mode.timed(current_time,self.sound)
 
             elif self.state.is_app_state(APPSTATE.PAUSED):
                 self.pause_menu.update()

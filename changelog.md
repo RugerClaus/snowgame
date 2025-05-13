@@ -153,4 +153,9 @@ Added Level Reducer to TUTORIALSTATE transitions so that the tutorial doesn't br
 Added Physics
 -Rocks and snow are now affected by gravity. 
 -Powerups and other items will float down at a continuous speeds
+---------------------------------------------------------------
+05/13 07:28
 
+Set up state systems and access for timed mode
+Commenting in the Mode Class
+Added UIUTIL object

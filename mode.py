@@ -8,6 +8,7 @@ from entities.powerup import Powerup
 from entities.levelreducer import LevelReducer
 from ui.ui import PlayerUI
 from ui.tutorial import Tutorial
+from ui.uiutil import UIUTIL
 
 
 from FSM.state import APPSTATE,TUTORIALSTATE
@@ -40,6 +41,7 @@ class Mode:
         self.level_reducers = []
         
         self.tutorialOBJ = Tutorial(self.screen,self.player)
+        self.UIUTIL = UIUTIL(self.screen)
 
     def reset_entities(self):
         self.snow_flakes = []
@@ -519,3 +521,12 @@ class Mode:
                 self.state.set_app_state(APPSTATE.MAIN_MENU)
 
     ### END TUTORIAL GAME MODE ###
+
+    ### START TIMED GAME MODE ###
+
+    def timed(self,current_time,sound):
+        self.screen.fill((0,0,0))
+        self.player.handle_input()
+        self.UIUTIL.INCOMPLETE()
+
+    ### END TIMED GAME MODE ###

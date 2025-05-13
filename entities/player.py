@@ -148,7 +148,7 @@ class Player:
         return 10 + (level - 1) * 10
 
     def calculate_snow_fall_threshold(self, level):
-        return max(950, 9500 - level * 2)
+        return max(200, 1000 - level * 2)
     
     def check_reducer(self):
         if self.reducer:

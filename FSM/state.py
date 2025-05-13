@@ -7,6 +7,7 @@ class APPSTATE(Enum):
     PAUSED = auto()
     GAME_OVER = auto()
     TUTORIAL = auto()
+    TIMED = auto()
     WIN = auto()
 
 class TUTORIALSTATE(Enum):
