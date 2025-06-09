@@ -156,11 +156,11 @@ class App:
         self.state.set_app_state(APPSTATE.MAIN_MENU)
 
         self.player = Player(self.screen)
-        self.player.current_level = 1  # <-- Reset level here!
+        self.player.current_level = 1
 
         self.main_menu = MainMenu(self.screen, self.play_endless, self.play_timed, self.play_tutorial, self.quit_game)
 
-        self.start_time = pygame.time.get_ticks()  # Optional: reset game timer
+        self.start_time = pygame.time.get_ticks()
 
         self.screen.fill((0, 0, 0))
         self.main_menu.update()

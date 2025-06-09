@@ -103,7 +103,7 @@ class PlayerUI:
         pygame.draw.rect(self.surface, fill_color, fill_rect)
         pygame.draw.rect(self.surface, (255, 255, 255), outline_rect, 2)
 
-    def draw_track_playing(self,sound): # sound should be the output of App.sound.current_track
+    def draw_track_playing(self,sound):
         text = self.font.render(f"Now Playing: {sound}", True,(255,255,255))
         
         self.screen.blit(text,(10,160))

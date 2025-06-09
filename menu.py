@@ -11,19 +11,16 @@ class MainMenu:
         self.timed = timed
         self.quit_callback = quit_callback
 
-        # Load static assets
         self.title_image_original = pygame.image.load("images/title.png").convert_alpha()
         self.bg_frames_original = [
             pygame.image.load(f"images/menu_bg/frame_{i}.png").convert_alpha()
             for i in range(1, 15)
         ]
 
-        # Initialize UI
         self.title_image = self.title_image_original
         self.title_rect = self.title_image.get_rect()
         self.bg_frames = []
 
-        # Set up background and buttons
         self.rescale_assets()
         self.background_animation = Animation(self.bg_frames, frame_delay=3)
         self.buttons = []
@@ -32,13 +29,11 @@ class MainMenu:
     def rescale_assets(self):
         screen_w, screen_h = self.screen.get_size()
 
-        # Rescale background frames from originals
         self.bg_frames = [
             pygame.transform.scale(frame, (screen_w, screen_h))
             for frame in self.bg_frames_original
         ]
 
-        # Rescale title image to half screen width and center it
         new_title_width = int(screen_w * 0.5)
         scale_factor = new_title_width / self.title_image_original.get_width()
         new_title_height = int(self.title_image_original.get_height() * scale_factor)

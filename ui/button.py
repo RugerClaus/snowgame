@@ -27,7 +27,7 @@ class Button:
             text_color = self.text_unhovered_color
 
         self.text_surface = self.font.render(self.text, True, text_color)
-        self.text_rect = self.text_surface.get_rect(center=self.rect.center)  # ← Recalculate this every frame
+        self.text_rect = self.text_surface.get_rect(center=self.rect.center)
 
         pygame.draw.rect(screen, (0,255,22), self.rect, border_radius=8)
         pygame.draw.rect(screen, self.color, self.rect)
@@ -41,5 +41,5 @@ class Button:
             print(f"{self.text} clicked at {mouse_pos}, rect: {self.rect}")
             if self.action:
                 self.action()
-            if not self.action: #needed edge case for buttons that do nothing
+            if not self.action:
                 self.action = None

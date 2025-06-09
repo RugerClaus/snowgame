@@ -7,7 +7,7 @@ class LevelReducer:
     def __init__(self, screen, level_reducer_type):
         self.screen = screen
         self.size = 40
-        self.color = (200,200,0)  # yellow for visibility
+        self.color = (200,200,0)
         self.type = level_reducer_type
         self.font = FontEngine("reducer").font
         self.reset()
