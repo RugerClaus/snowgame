@@ -29,7 +29,7 @@ class App:
         pygame.display.set_icon(icon)
 
         self.main_menu = MainMenu(self.screen,self.play_endless,self.play_timed,self.play_tutorial,self.quit_game)
-        self.player = Player(self.screen)
+        self.player = Player(self.screen,self)
 
         self.sound = SoundManager()
 
@@ -38,7 +38,7 @@ class App:
         self.pause_menu = PauseMenu(self.screen,self.pause_state_toggle, self.restart,self.go_to_menu,self.quit_game)
 
         self.state = StateManager()
-        self.mode = Mode(self.screen,self.player,self.state)
+        self.mode = Mode(self.screen,self.player,self.state,self)
         
 
     def quit_game(self):
@@ -54,9 +54,9 @@ class App:
             self.mode.snow_flakes = []
             self.mode.rocks = []
             self.mode.start_time = pygame.time.get_ticks()
-            self.player = Player(self.screen)
+            self.player = Player(self.screen,self)
             self.player.current_level = 1
-            self.mode = Mode(self.screen, self.player, self.state)
+            self.mode = Mode(self.screen, self.player, self.state, self)
             self.state.set_app_state(self.state.previous_app_state)
             self.sound.force_play_music()
         pygame.display.flip()
@@ -79,11 +79,11 @@ class App:
         self.mode.rocks = []
         self.mode.power_ups = []
         self.mode.start_time = pygame.time.get_ticks()
-        self.player = Player(self.screen)
+        self.player = Player(self.screen,self)
         self.player.current_level = 1
-        self.mode = Mode(self.screen,self.player,self.state)
+        self.mode = Mode(self.screen,self.player,self.state,self)
         self.state.set_app_state(APPSTATE.ENDLESS)
-        self.sound.force_play_music()
+        
 
     def play_endless(self):
         if not self.state.is_app_state(APPSTATE.ENDLESS):
@@ -100,10 +100,10 @@ class App:
         self.mode.snow_flakes = []
         self.mode.rocks = []
         self.mode.start_time = pygame.time.get_ticks()
-        self.player = Player(self.screen)
+        self.player = Player(self.screen,self)
         self.player.alive = True
         self.player.current_level = 1
-        self.mode = Mode(self.screen, self.player, self.state)
+        self.mode = Mode(self.screen, self.player, self.state,self)
 
         self.state.set_tutorial_state(TUTORIALSTATE.RESET)
         self.state.set_app_state(APPSTATE.TUTORIAL)
@@ -123,10 +123,10 @@ class App:
         self.mode.snow_flakes = []
         self.mode.rocks = []
         self.mode.start_time = pygame.time.get_ticks()
-        self.player = Player(self.screen)
+        self.player = Player(self.screen,self)
         self.player.alive = True
         self.player.current_level = 1
-        self.mode = Mode(self.screen,self.player,self.state)
+        self.mode = Mode(self.screen,self.player,self.state,self)
 
         self.state.set_app_state(APPSTATE.TIMED)
         self.sound.force_play_music()
@@ -155,7 +155,7 @@ class App:
 
         self.state.set_app_state(APPSTATE.MAIN_MENU)
 
-        self.player = Player(self.screen)
+        self.player = Player(self.screen,self)
         self.player.current_level = 1
 
         self.main_menu = MainMenu(self.screen, self.play_endless, self.play_timed, self.play_tutorial, self.quit_game)
@@ -178,13 +178,22 @@ class App:
                 screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
                 self.screen = screen
                 self.mode.ui.screen = screen
-                self.player.screen = screen
+                self.player.scale()
+                if len(self.mode.power_ups) > 0:
+                    self.mode.power_up.scale()
+                if len(self.mode.snow_flakes)> 0:
+                    self.mode.snow_flake.scale()
+                if len(self.mode.rocks)> 0:
+                    self.mode.rock.scale()
                 self.game_over.screen = screen
                 self.pause_menu.screen = screen
                 self.main_menu.screen = screen
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_F7:
                     print(f"current track: {self.sound.current_track}")
+                if event.key == pygame.K_3:
+                    self.player.current_level = 4
+                
             
             if (self.state.is_app_state(APPSTATE.PAUSED) or 
                 self.state.is_app_state(APPSTATE.ENDLESS) or 

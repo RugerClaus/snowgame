@@ -2,12 +2,28 @@ import pygame
 import random
 
 class Powerup:
-    def __init__(self, screen,powerup_type):
+    def __init__(self, screen,app,powerup_type):
+        self.app = app
         self.screen = screen
         self.colors = [(0,255,0),(255,0,0),(0,0,255)]
         self.type = powerup_type
         self.reset()
         
+    def scale(self):
+        BASE_WIDTH = self.app.width
+        BASE_HEIGHT = self.app.height
+
+        current_screen_width,current_screen_height = self.screen.get_size()
+        width_scale_factor = current_screen_width / BASE_WIDTH
+        height_scale_factor = current_screen_height / BASE_HEIGHT
+
+        original_powerup_width = self.size
+        scaled_powerup_width = int(original_powerup_width * width_scale_factor)
+        self.width = scaled_powerup_width
+
+        original_powerup_height = self.size
+        scaled_powerup_height = int(original_powerup_height * height_scale_factor)
+        self.height = scaled_powerup_height
     
     def reset(self):
         if self.type == "anti_shrink":

@@ -14,7 +14,8 @@ from ui.uiutil import UIUTIL
 from FSM.state import APPSTATE,TUTORIALSTATE
 
 class Mode:
-    def __init__(self,screen,player,state):
+    def __init__(self,screen,player,state,app):
+        self.app = app
         self.screen = screen
         self.player = player
         self.state = state
@@ -55,6 +56,7 @@ class Mode:
         for snow_flake in self.snow_flakes:
             snow_flake.update(self.player.current_level)
             snow_flake.draw()
+            self.snow_flake = snow_flake
             if collide(self.player,snow_flake):
                 sound.play_sfx("pickup_snow")
                 self.player.width += snow_flake.rect.width
@@ -63,9 +65,14 @@ class Mode:
                 snow_flake.reset()
 
     def handle_rocks(self):
+        for i in range(len(self.rocks)):
+            for j in range(len(self.rocks)):
+                if collide(self.rocks[i],self.rocks[j]):
+                    self.rocks[i].rect.right = self.rocks[j].rect.left - 10
         for rock in self.rocks:
             rock.update()
             rock.draw()
+            self.rock = rock
             if collide(self.player,rock):
                 if self.player.powerup and self.player.powerup_type == "absorb_rock":
                     self.player.width += rock.rect.width
@@ -77,12 +84,19 @@ class Mode:
                 else:
                     self.player.alive = False
                 rock.reset()
+            if len(self.snow_flakes) > 0:
+                for snow_flake in self.snow_flakes:
+                    if collide(rock,snow_flake):
+                        snow_flake.rect.top += rock.rect.bottom + snow_flake.size
+                        
+                        snow_flake.speed = rock.speed + 0.5
 
     def handle_power_ups(self):
 
         for power_up in self.power_ups:
             power_up.update()
             power_up.draw()
+            self.power_up = power_up
             if collide(self.player,power_up):
                 
                 self.player.powerup = True
@@ -105,12 +119,12 @@ class Mode:
         # BEGIN NON-PLAYER ENTITY SPAWNING
 
         if current_time - self.last_flake_spawn_time > self.flake_spawn_interval and len(self.snow_flakes) < self.player.snow_fall_threshold:
-            self.snow_flakes.append(Snow(self.screen))
+            self.snow_flakes.append(Snow(self.screen,self.app))
             self.last_flake_spawn_time = current_time
             self.flake_spawn_interval = random.randint(0,200)
 
         if current_time - self.last_rock_start_time > self.rock_spawn_interval and len(self.rocks) < 30 and self.player.current_level >= 4:
-            self.rocks.append(Rock(self.screen))
+            self.rocks.append(Rock(self.screen,self.app))
             self.last_rock_start_time = current_time
             self.rock_spawn_interval = random.randint(2000,6000)
         elif self.player.current_level < 4:
@@ -124,7 +138,7 @@ class Mode:
             elif self.player.current_level < 11:
                 powerup_type = random.choice(["absorb_rock"])
 
-            self.power_ups.append(Powerup(self.screen, powerup_type=powerup_type))
+            self.power_ups.append(Powerup(self.screen, self.app, powerup_type=powerup_type))
             self.last_power_up_start_time = current_time
             self.power_up_spawn_interval = random.randint(4000, 10000)
         elif self.player.current_level < 6:
@@ -171,11 +185,11 @@ class Mode:
 
         self.handle_snow_flakes(sound)
 
-        self.handle_rocks()
-        
         self.handle_power_ups()
 
         self.handle_level_reducers()
+
+        self.handle_rocks()
                 
         if self.player.check_level_up(): # have to have this here to clear the entities at the right time. 
             print("clearing screen...") # This way the level clears after the collision logic
@@ -203,7 +217,7 @@ class Mode:
         self.ui.update()
         self.ui.draw()
         if current_time - self.last_flake_spawn_time > self.flake_spawn_interval and len(self.snow_flakes) < self.player.snow_fall_threshold:
-            self.snow_flakes.append(Snow(self.screen))
+            self.snow_flakes.append(Snow(self.screen,self.app))
             self.last_flake_spawn_time = current_time
             self.flake_spawn_interval = random.randint(0,200)
         for snow_flake in self.snow_flakes:
@@ -228,11 +242,11 @@ class Mode:
         self.ui.draw()
 
         if current_time - self.last_flake_spawn_time > self.flake_spawn_interval and len(self.snow_flakes) < self.player.snow_fall_threshold:
-            self.snow_flakes.append(Snow(self.screen))
+            self.snow_flakes.append(Snow(self.screen,self.app))
             self.last_flake_spawn_time = current_time
             self.flake_spawn_interval = random.randint(0,200)
         if current_time - self.last_rock_start_time > self.rock_spawn_interval and len(self.rocks) < 30 and self.player.current_level >= 4:
-            self.rocks.append(Rock(self.screen))
+            self.rocks.append(Rock(self.screen,self.app))
             self.last_rock_start_time = current_time
             self.rock_spawn_interval = random.randint(2000,6000)
         elif self.player.current_level < 4:
@@ -272,11 +286,11 @@ class Mode:
         self.ui.draw()
 
         if current_time - self.last_flake_spawn_time > self.flake_spawn_interval and len(self.snow_flakes) < self.player.snow_fall_threshold:
-            self.snow_flakes.append(Snow(self.screen))
+            self.snow_flakes.append(Snow(self.screen,self.app))
             self.last_flake_spawn_time = current_time
             self.flake_spawn_interval = random.randint(0,200)
         if current_time - self.last_rock_start_time > self.rock_spawn_interval and len(self.rocks) < 30 and self.player.current_level >= 4:
-            self.rocks.append(Rock(self.screen))
+            self.rocks.append(Rock(self.screen,self.app))
             self.last_rock_start_time = current_time
             self.rock_spawn_interval = random.randint(2000,6000)
         elif self.player.current_level < 4:
@@ -285,7 +299,7 @@ class Mode:
             if self.player.current_level < 10:
                 powerup_type = random.choice(["absorb_rock"])
 
-            self.power_ups.append(Powerup(self.screen, powerup_type=powerup_type))
+            self.power_ups.append(Powerup(self.screen, self.app, powerup_type=powerup_type))
             self.last_power_up_start_time = current_time
             self.power_up_spawn_interval = random.randint(4000, 10000)
         elif self.player.current_level < 6:
@@ -323,11 +337,11 @@ class Mode:
         else:
             sound.stop_sfx()
         if current_time - self.last_flake_spawn_time > self.flake_spawn_interval and len(self.snow_flakes) < self.player.snow_fall_threshold:
-            self.snow_flakes.append(Snow(self.screen))
+            self.snow_flakes.append(Snow(self.screen,self.app))
             self.last_flake_spawn_time = current_time
             self.flake_spawn_interval = random.randint(0,200)
         if current_time - self.last_rock_start_time > self.rock_spawn_interval and len(self.rocks) < 30 and self.player.current_level >= 4:
-            self.rocks.append(Rock(self.screen))
+            self.rocks.append(Rock(self.screen,self.app))
             self.last_rock_start_time = current_time
             self.rock_spawn_interval = random.randint(2000,6000)
         elif self.player.current_level < 4:
@@ -340,7 +354,7 @@ class Mode:
             elif self.player.current_level < 11:
                 powerup_type = random.choice(["absorb_rock"])
 
-            self.power_ups.append(Powerup(self.screen, powerup_type=powerup_type))
+            self.power_ups.append(Powerup(self.screen, self.app, powerup_type=powerup_type))
             self.last_power_up_start_time = current_time
             self.power_up_spawn_interval = random.randint(4000, 10000)
         elif self.player.current_level < 6:
@@ -396,11 +410,11 @@ class Mode:
         else:
             sound.stop_sfx()
         if current_time - self.last_flake_spawn_time > self.flake_spawn_interval and len(self.snow_flakes) < self.player.snow_fall_threshold:
-            self.snow_flakes.append(Snow(self.screen))
+            self.snow_flakes.append(Snow(self.screen,self.app))
             self.last_flake_spawn_time = current_time
             self.flake_spawn_interval = random.randint(0,200)
         if current_time - self.last_rock_start_time > self.rock_spawn_interval and len(self.rocks) < 30 and self.player.current_level >= 4:
-            self.rocks.append(Rock(self.screen))
+            self.rocks.append(Rock(self.screen,self.app))
             self.last_rock_start_time = current_time
             self.rock_spawn_interval = random.randint(2000,6000)
         elif self.player.current_level < 4:
@@ -413,7 +427,7 @@ class Mode:
             elif self.player.current_level < 11:
                 powerup_type = random.choice(["absorb_rock"])
 
-            self.power_ups.append(Powerup(self.screen, powerup_type=powerup_type))
+            self.power_ups.append(Powerup(self.screen, self.app, powerup_type=powerup_type))
             self.last_power_up_start_time = current_time
             self.power_up_spawn_interval = random.randint(4000, 10000)
         elif self.player.current_level < 6:

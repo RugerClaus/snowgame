@@ -39,7 +39,7 @@ class SoundManager:
 
     def _play_next_track(self):
         if not self.music_active:
-            return
+            self.stop_music()
 
         if not self.music_queue:
             
@@ -60,11 +60,15 @@ class SoundManager:
         if event.type == self.MUSIC_END_EVENT and self.music_active:
             self.current_track = None
             self._play_next_track()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_F4:
+                self.stop_music()
 
     def start_music(self):
         if not pygame.mixer.music.get_busy() and self.current_track is None:
             self._play_next_track()
     def stop_music(self):
+        self.music_active = False
         pygame.mixer.music.stop()
         self.current_track = None
 
@@ -109,10 +113,11 @@ class SoundManager:
 
     def force_play_music(self):
         self.stop_music()
-        if self.music_tracks:
-            track_name = random.choice(list(self.music_tracks.keys()))
-            pygame.mixer.music.load(self.music_tracks[track_name])
-            pygame.mixer.music.set_volume(self.volume)
-            pygame.mixer.music.play()  
-            self.current_track = track_name
-            print(f"Forced play: {track_name}")
+        if self.music_active:
+            if self.music_tracks:
+                track_name = random.choice(list(self.music_tracks.keys()))
+                pygame.mixer.music.load(self.music_tracks[track_name])
+                pygame.mixer.music.set_volume(self.volume)
+                pygame.mixer.music.play()  
+                self.current_track = track_name
+                print(f"Forced play: {track_name}")

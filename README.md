@@ -1,9 +1,6 @@
 **REQUIRES PYTHON 3.10 MINIMUM**
 _________________
 
-
-License for original assets:
-
 SOUNDTRACK:
 <p>Winter Waves - RugerClaus</p>
 <p>Isle of Atmospheres - RugerClaus</p>

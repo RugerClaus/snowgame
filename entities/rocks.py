@@ -2,7 +2,8 @@ import pygame
 import random
 
 class Rock:
-    def __init__(self, screen):
+    def __init__(self, screen,app):
+        self.app = app
         self.screen = screen
         self.y = -50
         self.width = random.randint(30,50)
@@ -26,11 +27,28 @@ class Rock:
         self.surface.fill(random.choice(colors))
         self.reset()
 
+    def scale(self):
+        BASE_WIDTH = self.app.width
+        BASE_HEIGHT = self.app.height
+
+        current_screen_width,current_screen_height = self.screen.get_size()
+        width_scale_factor = current_screen_width / BASE_WIDTH
+        height_scale_factor = current_screen_height / BASE_HEIGHT
+
+        original_rock_width = self.width
+        scaled_rock_width = int(original_rock_width * width_scale_factor)
+        self.width = scaled_rock_width
+
+        original_rock_height = self.height
+        scaled_rock_height = int(original_rock_height * height_scale_factor)
+        self.height = scaled_rock_height
+
     def reset(self):
         self.x = random.randint(0, self.screen.get_width())
         self.y = random.randint(-600, -200)
         self.speed = 0
         self.rect = self.surface.get_rect(topleft=(self.x, self.y))
+        self.scale()
 
     def update(self):
         acceleration = 0.1

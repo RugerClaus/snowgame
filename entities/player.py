@@ -2,7 +2,8 @@ import pygame
 import random
 
 class Player:
-    def __init__(self, screen):
+    def __init__(self, screen,app):
+        self.app = app
         self.screen = screen
         self.reset()
         self.size = self.width
@@ -17,7 +18,27 @@ class Player:
         
         self.screen.blit(self.surface, self.rect)
 
+    def scale(self):
+        BASE_WIDTH = self.app.width
+        BASE_HEIGHT = self.app.height
+
+        current_screen_width,current_screen_height = self.screen.get_size()
+        width_scale_factor = current_screen_width / BASE_WIDTH
+        height_scale_factor = current_screen_height / BASE_HEIGHT
+
+        original_player_width = self.width
+        scaled_player_width = int(original_player_width * width_scale_factor)
+        self.width = scaled_player_width
+
+        original_player_height = self.height
+        scaled_player_height = int(original_player_height * height_scale_factor)
+        self.height = scaled_player_height
+
     def update(self):
+
+        if self.width != self.height:
+            self.scale()
+
 
         self.check_level_up()
 
@@ -125,6 +146,7 @@ class Player:
         self.snow_fall_threshold = self.calculate_snow_fall_threshold(self.current_level)
         self.score = 0
         self.powerup = False
+        self.scale()
 
     def check_level_up(self):
         if self.width >= self.level_up_size:

@@ -159,3 +159,12 @@ Added Physics
 Set up state systems and access for timed mode
 Commenting in the Mode Class
 Added UIUTIL object
+
+---------------------------------------------------------------
+12/10 03:45
+
+Scaled all entities with screen size for consistent size changes and preventing overload of total objects on the screen. 
+Rocks now collide with snow and will push the snow down beneath them
+Rocks can no longer spawn on top of each other and if they do, they push away
+Rocks now spawn above everything on the z axis (on top)
+
