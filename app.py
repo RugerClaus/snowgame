@@ -74,24 +74,27 @@ class App:
 
     def _init_endless(self):
         self.sound.stop_music()
-        
         self.mode.snow_flakes = []
         self.mode.rocks = []
         self.mode.power_ups = []
         self.mode.start_time = pygame.time.get_ticks()
-        self.player = Player(self.screen,self)
+        self.player = Player(self.screen, self)
         self.player.current_level = 1
-        self.mode = Mode(self.screen,self.player,self.state,self)
+        self.mode = Mode(self.screen, self.player, self.state, self)
+
+        # Set the app state to ENDLESS
         self.state.set_app_state(APPSTATE.ENDLESS)
-        
+
+        self.sound.music_active = True
+        self.sound.start_music()
 
     def play_endless(self):
         if not self.state.is_app_state(APPSTATE.ENDLESS):
             self.state.set_app_state(APPSTATE.ENDLESS)
             self._init_endless()
-            self.sound.set_volume(0.5)
-            self.sound.force_play_music()
-    
+            self.sound.set_volume(0.2)
+            print("Entering endless mode, starting music.")
+
     # END HANDLE ENDLESS MODE
 
     # HANDLE TUTORIAL MODE

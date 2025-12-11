@@ -173,3 +173,8 @@ Rocks now spawn above everything on the z axis (on top)
 
 Made player, snow flakes and power ups circles 
 Removed music during gameplay as the sound engine sucks in this program
+
+-------------------------------------------------------------------------------
+12/11/25 12:39
+
+Re-added music to gameplay and made it toggleable with the M key. 

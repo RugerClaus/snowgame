@@ -54,3 +54,7 @@ things to the game.
 ------------------------------------------------------------------------------------------
 
 At last the snow is round and the powerups and player are too. Improved gameplay mechanics.
+
+---------------------------------------------------------
+
+The sound engine in this project is fucking subpar. Kill it with a knife, the one in Distant Realms is superior. Everything is superior in my framework

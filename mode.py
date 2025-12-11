@@ -168,6 +168,7 @@ class Mode:
         # WILL WANT TO DRAW A GROUND HERE.
 
         # SET UP PLAYER HANDLING
+        sound.start_music()
 
         self.player.handle_input()
         self.player.update()

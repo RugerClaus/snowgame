@@ -28,6 +28,7 @@ SOUNDTRACK:
 
 <p>Press and hold A to move left.</p>
 <p>Press and hold D to move right.</p>
+<p>Press M to toggle music</p>
 
 <p>The object of the game is to capture snowflakes and push the grow meter to the max to level up.</p>
 <p>You need to avoid the falling rocks as collision with a rock forces a game over.</p>

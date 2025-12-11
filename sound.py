@@ -2,7 +2,7 @@ import pygame
 import random
 
 class SoundManager:
-    def __init__(self, volume=0.5):
+    def __init__(self, volume=0.2):
         pygame.mixer.init()
         self.MUSIC_END_EVENT = pygame.USEREVENT + 1
         pygame.mixer.music.set_endevent(self.MUSIC_END_EVENT)
@@ -61,32 +61,26 @@ class SoundManager:
             self.current_track = None
             self._play_next_track()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_F4:
-                self.stop_music()
+            if event.key == pygame.K_m:
+                self.toggle_music()
 
     def start_music(self):
-        if not pygame.mixer.music.get_busy() and self.current_track is None:
+        if self.music_active and not pygame.mixer.music.get_busy():
+            print("Starting music playback.")
             self._play_next_track()
     def stop_music(self):
         self.music_active = False
         pygame.mixer.music.stop()
         self.current_track = None
 
-    def toggle_music(self, state=None):
+    def toggle_music(self):
         if self.music_active:
-            pygame.mixer.music.stop()
-            print("Music off")
-            self.current_track = None
+            self.stop_music()
+            print("Music turned off.")
         else:
-            if state and state in self.music_tracks:
-                pygame.mixer.music.load(self.music_tracks[state])
-                pygame.mixer.music.set_volume(self.volume)
-                pygame.mixer.music.play()  
-                self.current_track = state
-                print(f"Music on: {state}")
-            else:
-                self.start_music()
-        self.music_active = not self.music_active
+            self.music_active = True
+            self.start_music() 
+            print("Music turned on.")
 
     def set_volume(self, volume):
         self.volume = max(0, min(volume, 1))

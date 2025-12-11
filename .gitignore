@@ -1,1 +1,10 @@
 /venv
+/build
+/dist
+*.pyc
+__pycache__/
+.env
+.DS_Store
+.idea/
+.vscode/
+*.log
