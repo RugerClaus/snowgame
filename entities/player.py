@@ -5,6 +5,7 @@ class Player:
     def __init__(self, screen,app):
         self.app = app
         self.screen = screen
+        self.color = (255, 255, 255)
         self.reset()
         self.size = self.width
         self.powerup_duration = 5000
@@ -17,6 +18,8 @@ class Player:
     def draw(self):
         
         self.screen.blit(self.surface, self.rect)
+        #draw the player as a white circle
+        pygame.draw.circle(self.surface, self.color, (int(self.size) // 2, int(self.size) // 2), int(self.width) // 2)
 
     def scale(self):
         BASE_WIDTH = self.app.width
@@ -45,8 +48,6 @@ class Player:
         old_centerx = self.rect.centerx
         old_bottom = self.rect.bottom
 
-        self.surface = pygame.surface.Surface((int(self.width), int(self.height)))
-        self.surface.fill((255, 255, 255))
         self.rect = self.surface.get_rect()
 
         self.rect.centerx = old_centerx
@@ -88,24 +89,30 @@ class Player:
             current_time = pygame.time.get_ticks()
             if self.powerup_type == "anti_shrink":
                 self.shrink_rate = 0
-                self.surface.fill((0,255,22))
+                self.color = (0,255,22)
             elif self.powerup_type == "grow_small":
                 self.shrink_rate = -0.02
-                self.surface.fill((255,22,0))
+                self.color = (255,255,0)
             elif self.powerup_type == "absorb_rock":
-                self.surface.fill((22,0,255))
+                self.color = (22,0,255)
                 if current_time - self.powerup_start_time >= self.powerup_duration:
                     self.powerup = False
 
             if current_time - self.powerup_start_time >= self.powerup_duration:
                 self.powerup = False
+                self.color = (255,255,255)
+        if not self.powerup:
+            self.color = (255,255,255)
         
         self.check_reducer()
 
         if self.width <= 1:
             self.alive = False 
         self.width = max(1, self.width - self.shrink_rate)
-        self.height = max(1, self.height - self.shrink_rate)
+        self.height = self.width
+        self.surface = pygame.surface.Surface((self.width, self.height))
+        self.surface.fill((0,0,0))
+        pygame.draw.circle(self.surface, self.color, (int(self.size) // 2, int(self.size) // 2), int(self.width) // 2)
 
         self.size = self.width
         self.rect.bottom = self.screen.get_height() - 100
@@ -132,9 +139,10 @@ class Player:
     def reset(self):
         self.width = 10
         self.height = 10
+        self.color = (255,255,255)
         self.surface = pygame.surface.Surface((self.width, self.height))
         self.rect = self.surface.get_rect()
-        self.surface.fill((255, 255, 255))
+        self.surface.fill((0,0,0))
         self.rect.bottom = self.screen.get_height() - 100
         self.start = self.screen.get_width() // 2
         self.rect.centerx = self.start

@@ -192,7 +192,7 @@ class App:
                 if event.key == pygame.K_F7:
                     print(f"current track: {self.sound.current_track}")
                 if event.key == pygame.K_3:
-                    self.player.current_level = 4
+                    self.player.current_level = 16
                 
             
             if (self.state.is_app_state(APPSTATE.PAUSED) or 

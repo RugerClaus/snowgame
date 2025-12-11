@@ -153,7 +153,7 @@ class Mode:
                 level_reducer_type = random.choice(["level_reducer_twenty"])
 
             
-            self.level_reducers.append(LevelReducer(self.screen,level_reducer_type))
+            self.level_reducers.append(LevelReducer(self.screen,self.app,level_reducer_type))
             self.last_level_reducer_start_time = current_time
             self.level_reducer_spawn_interval = random.randint(7000,14000)
         elif self.player.current_level < 16:
@@ -259,6 +259,7 @@ class Mode:
         for rock in self.rocks:
             rock.update()
             rock.draw()
+            self.rock = rock
             if collide(self.player,rock):
                 self.state.set_previous_app_state(self.state.get_app_state())
                 self.state.set_app_state(APPSTATE.GAME_OVER)
@@ -368,7 +369,7 @@ class Mode:
             elif self.player.current_level >= 16:
                 level_reducer_type = random.choice(["level_reducer_twenty"])
             
-            self.level_reducers.append(LevelReducer(self.screen,level_reducer_type))
+            self.level_reducers.append(LevelReducer(self.screen,self.app,level_reducer_type))
             self.last_level_reducer_start_time = current_time
             self.level_reducer_spawn_interval = random.randint(7000,14000)
 
@@ -389,6 +390,7 @@ class Mode:
         for reducer in self.level_reducers:
             reducer.update()
             reducer.draw()
+            self.level_reducer = reducer
 
             if reducer.y >= self.screen.get_height() // 2:
                 self.state.set_tutorial_state(TUTORIALSTATE.LEVEL_REDUCER_PROMPT)
@@ -441,7 +443,7 @@ class Mode:
             elif self.player.current_level >= 16:
                 level_reducer_type = random.choice(["level_reducer_twenty"])
             
-            self.level_reducers.append(LevelReducer(self.screen,level_reducer_type))
+            self.level_reducers.append(LevelReducer(self.screen,self.app,level_reducer_type))
             self.last_level_reducer_start_time = current_time
             self.level_reducer_spawn_interval = random.randint(7000,14000)
 

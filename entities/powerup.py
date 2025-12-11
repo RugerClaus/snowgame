@@ -8,6 +8,7 @@ class Powerup:
         self.colors = [(0,255,0),(255,0,0),(0,0,255)]
         self.type = powerup_type
         self.reset()
+        self.color = (255,255,255)
         
     def scale(self):
         BASE_WIDTH = self.app.width
@@ -32,24 +33,27 @@ class Powerup:
             self.y = random.randint(-600, -self.size)
             self.speed = 4
             self.surface = pygame.Surface((self.size, self.size), pygame.SRCALPHA)
-            self.surface.fill(self.colors[0])
+            self.surface.fill((0,0,0))
             self.rect = self.surface.get_rect(topleft=(self.x, self.y))
+            self.color = self.colors[0]
         elif self.type == "grow_small":
             self.size = 3
             self.x = random.randint(0, self.screen.get_width() - self.size)
             self.y = random.randint(-600, -self.size)
             self.speed = 8
             self.surface = pygame.Surface((self.size, self.size), pygame.SRCALPHA)
-            self.surface.fill(self.colors[1])
+            self.surface.fill((0,0,0))
             self.rect = self.surface.get_rect(topleft=(self.x, self.y))
+            self.color = self.colors[1]
         elif self.type == "absorb_rock":
             self.size = 15
             self.x = random.randint(0,self.screen.get_width()- self.size)
             self.y = random.randint(-600, -self.size)
             self.speed = 5
             self.surface = pygame.Surface((self.size, self.size), pygame.SRCALPHA)
-            self.surface.fill(self.colors[2])
+            self.surface.fill((0,0,0))
             self.rect = self.surface.get_rect(topleft=(self.x,self.y))
+            self.color = self.colors[2]
 
     def update(self):
         self.y += self.speed
@@ -59,6 +63,12 @@ class Powerup:
 
     def draw(self):
         self.screen.blit(self.surface, self.rect)
+        if self.type == "anti_shrink":
+            pygame.draw.circle(self.surface, self.colors[0], (self.size // 2, self.size // 2), self.size // 2)
+        elif self.type == "grow_small":
+            pygame.draw.circle(self.surface, self.colors[1], (self.size // 2, self.size // 2), self.size // 2)
+        elif self.type == "absorb_rock":    
+            pygame.draw.circle(self.surface, self.colors[2], (self.size // 2, self.size // 2), self.size // 2)
 
     def freeze(self):
         self.speed = 0

@@ -4,7 +4,8 @@ import random
 from ui.font import FontEngine
 
 class LevelReducer:
-    def __init__(self, screen, level_reducer_type):
+    def __init__(self, screen, app, level_reducer_type):
+        self.app = app
         self.screen = screen
         self.size = 40
         self.color = (200,200,0)
@@ -43,6 +44,23 @@ class LevelReducer:
             text = self.font.render("70",True,(255,0,0))
             text_rect = text.get_rect(center=(self.size // 2, self.size // 2)) 
             self.surface.blit(text,text_rect)
+
+    def scale(self):
+        BASE_WIDTH = self.app.width
+        BASE_HEIGHT = self.app.height
+
+        current_screen_width,current_screen_height = self.screen.get_size()
+        width_scale_factor = current_screen_width / BASE_WIDTH
+        height_scale_factor = current_screen_height / BASE_HEIGHT
+
+        original_power_up_width = self.size
+        scaled_power_up_width = int(original_power_up_width * width_scale_factor)
+        self.width = scaled_power_up_width
+
+        original_power_up_height = self.size
+        scaled_power_up_height = int(original_power_up_height * height_scale_factor)
+        self.height = scaled_power_up_height
+        
 
     def update(self):
         self.y += self.speed

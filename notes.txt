@@ -50,3 +50,7 @@ That framework even covers so many bases needed in this program. Snow Blitz is a
 
 The code organization in this is a shit show and I should be ashamed, but iirc, I think I was trying to make this as a demo of sorts, and it kind of blew up as I added
 things to the game.
+
+------------------------------------------------------------------------------------------
+
+At last the snow is round and the powerups and player are too. Improved gameplay mechanics.

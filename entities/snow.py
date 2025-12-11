@@ -20,7 +20,7 @@ class Snow:
         self.size = random.randint(1,self.current_level + 9)
         self.speed = 0.01
         self.surface = pygame.Surface((self.size,self.size))
-        self.surface.fill((255,255,255))
+        self.surface.fill((0,0,0))
         self.rect = self.surface.get_rect()
         self.scale()
 
@@ -55,6 +55,8 @@ class Snow:
 
     def draw(self):
         self.screen.blit(self.surface, self.rect)
+        # draw the snowflake as a white circle
+        pygame.draw.circle(self.surface, (255, 255, 255), (self.size // 2, self.size // 2), self.size // 2)
 
     def freeze(self):
         self.speed = 0

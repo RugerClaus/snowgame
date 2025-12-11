@@ -168,3 +168,8 @@ Rocks now collide with snow and will push the snow down beneath them
 Rocks can no longer spawn on top of each other and if they do, they push away
 Rocks now spawn above everything on the z axis (on top)
 
+----------------------------------------------------------------
+12/11 11:49
+
+Made player, snow flakes and power ups circles 
+Removed music during gameplay as the sound engine sucks in this program
