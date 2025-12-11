@@ -1,4 +1,4 @@
-pyinstaller --onefile \
+pyinstaller --onefile --noconsole --name SnowBlitz_vAlpha_1.3.1a \
 --add-data="/home/rugerclaus/snowgame/font/*.ttf:font" \
 --add-data="/home/rugerclaus/snowgame/images/*:images" \
 --add-data="/home/rugerclaus/snowgame/sounds/*:sounds" \
