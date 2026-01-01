@@ -64,10 +64,7 @@ class App:
     def pause_state_toggle(self):
         if self.state.is_app_state(APPSTATE.PAUSED):
             self.state.set_app_state(self.state.previous_app_state)
-            self.sound.set_volume(0.5)
-        else:
-            self.state.set_app_state(APPSTATE.PAUSED)
-            self.sound.set_volume(0.5)
+            self.sound.set_volume(0.2)
         
 
     # HANDLE ENDLESS MODE
@@ -117,7 +114,7 @@ class App:
             self.state.set_previous_app_state(self.state.get_app_state())
             self.state.set_app_state(APPSTATE.TUTORIAL)
             self._init_tutorial()
-            self.sound.set_volume(0.5)
+            self.sound.set_volume(0.2)
             self.sound.force_play_music()
 
     # END TUTORIAL MODE
@@ -140,7 +137,7 @@ class App:
             self.state.set_previous_app_state(self.state.get_app_state)
             self.state.set_app_state(APPSTATE.TIMED)
             self._init_timed()
-            self.sound.set_volume(0.5)
+            self.sound.set_volume(0.2)
             self.sound.force_play_music()
 
     def go_to_menu(self):
@@ -195,7 +192,10 @@ class App:
                 if event.key == pygame.K_F7:
                     print(f"current track: {self.sound.current_track}")
                 if event.key == pygame.K_3:
-                    self.player.current_level = 16
+                    self.player.current_level = 23
+                if self.state.is_app_state(APPSTATE.PAUSED):
+                    if event.key == pygame.K_ESCAPE:
+                        self.pause_state_toggle()
                 
             
             if (self.state.is_app_state(APPSTATE.PAUSED) or 

@@ -89,12 +89,12 @@ class Player:
             current_time = pygame.time.get_ticks()
             if self.powerup_type == "anti_shrink":
                 self.shrink_rate = 0
-                self.color = (0,255,22)
+                self.color = (0,255,0)
             elif self.powerup_type == "grow_small":
                 self.shrink_rate = -0.02
-                self.color = (255,255,0)
+                self.color = (255,0,0)
             elif self.powerup_type == "absorb_rock":
-                self.color = (22,0,255)
+                self.color = (0,0,255)
                 if current_time - self.powerup_start_time >= self.powerup_duration:
                     self.powerup = False
 

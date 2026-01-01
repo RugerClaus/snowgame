@@ -28,7 +28,7 @@ class Powerup:
     
     def reset(self):
         if self.type == "anti_shrink":
-            self.size = 7
+            self.size = 15
             self.x = random.randint(0, self.screen.get_width() - self.size)
             self.y = random.randint(-600, -self.size)
             self.speed = 4
@@ -37,7 +37,7 @@ class Powerup:
             self.rect = self.surface.get_rect(topleft=(self.x, self.y))
             self.color = self.colors[0]
         elif self.type == "grow_small":
-            self.size = 3
+            self.size = 15
             self.x = random.randint(0, self.screen.get_width() - self.size)
             self.y = random.randint(-600, -self.size)
             self.speed = 8
